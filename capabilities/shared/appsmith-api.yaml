@@ -1,0 +1,144 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Appsmith API
+  description: >-
+    API for the Appsmith open source low-code platform for building internal tools
+    and workflow applications with connected datasources.
+  tags:
+    - Appsmith
+    - Low-Code
+    - Internal Tools
+    - Workflow Automation
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      APPSMITH_API_TOKEN: APPSMITH_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: appsmith
+      baseUri: "https://app.appsmith.com/api/v1"
+      description: Appsmith platform API
+      authentication:
+        type: bearer
+        token: "{{APPSMITH_API_TOKEN}}"
+      resources:
+        - name: applications
+          path: /applications
+          description: Low-code application management
+          operations:
+            - name: list-applications
+              method: GET
+              description: Returns a list of Appsmith applications
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-application
+              method: POST
+              description: Creates a new application
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  workspaceId: "{{tools.workspaceId}}"
+            - name: get-application
+              method: GET
+              description: Returns a specific application
+              inputParameters:
+                - name: applicationId
+                  in: path
+                  type: string
+                  required: true
+                  description: Application identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: workspaces
+          path: /workspaces
+          description: Workspace management
+          operations:
+            - name: list-workspaces
+              method: GET
+              description: Returns a list of workspaces
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: datasources
+          path: /datasources
+          description: Connected datasource management
+          operations:
+            - name: list-datasources
+              method: GET
+              description: Returns connected datasources
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: mcp
+      port: 9090
+      namespace: appsmith-mcp
+      transport: http
+      tools:
+        - name: list-applications
+          description: Lists Appsmith low-code applications
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appsmith.list-applications"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: create-application
+          description: Creates a new low-code application in Appsmith
+          hints:
+            readOnly: false
+            destructive: false
+          call: "appsmith.create-application"
+          with:
+            name: "tools.name"
+            workspaceId: "tools.workspaceId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-workspaces
+          description: Lists Appsmith workspaces
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appsmith.list-workspaces"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-datasources
+          description: Lists connected datasources in Appsmith
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appsmith.list-datasources"
+          outputParameters:
+            - type: object
+              mapping: "$."

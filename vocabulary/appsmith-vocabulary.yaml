@@ -1,0 +1,124 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: Appsmith
+  description: >-
+    Vocabulary for the Appsmith open source low-code platform, covering application
+    lifecycle management, workspace organization, datasource connectivity, and
+    page/widget composition for building internal tools.
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - name: Appsmith API
+      namespace: appsmith
+      version: "1.0.0"
+      baseUrl: "https://app.appsmith.com/api/v1"
+      status: active
+
+  resources:
+    - name: applications
+      description: Low-code applications for internal tools and workflows
+      api: Appsmith API
+      actions:
+        - list
+        - create
+        - get
+        - update
+        - delete
+    - name: workspaces
+      description: Team workspaces for organizing applications
+      api: Appsmith API
+      actions:
+        - list
+        - create
+        - get
+    - name: datasources
+      description: Connected databases, APIs, and services for application data
+      api: Appsmith API
+      actions:
+        - list
+        - create
+        - get
+        - delete
+
+  actions:
+    - name: list
+      httpMethod: GET
+      pattern: read
+    - name: create
+      httpMethod: POST
+      pattern: write
+    - name: get
+      httpMethod: GET
+      pattern: read
+    - name: update
+      httpMethod: PUT
+      pattern: write
+    - name: delete
+      httpMethod: DELETE
+      pattern: destructive
+
+  schemas:
+    core:
+      - name: Application
+        description: A low-code application with pages, widgets, and datasource connections
+      - name: Workspace
+        description: A team workspace for organizing and sharing applications
+      - name: Datasource
+        description: A connected external data source powering application queries
+
+  parameters:
+    identifiers:
+      - name: applicationId
+        description: Unique application identifier
+      - name: workspaceId
+        description: Unique workspace identifier
+      - name: datasourceId
+        description: Unique datasource identifier
+    filters:
+      - name: workspaceId
+        description: Filter applications by workspace
+
+  enums:
+    datasourceTypes:
+      - PostgreSQL
+      - MySQL
+      - MongoDB
+      - REST API
+      - GraphQL
+      - Firestore
+      - S3
+      - Redis
+
+  authentication:
+    schemes:
+      - type: bearer
+        description: Bearer token authentication for API access
+
+capability:
+  workflows:
+    - name: Internal Tool Builder
+      description: Build and deploy low-code internal tools with Appsmith
+      resources:
+        - applications
+        - workspaces
+        - datasources
+  personas:
+    - name: Developer
+      description: Builds low-code internal tools and workflow applications
+    - name: Team Lead
+      description: Manages workspaces and application access for teams
+  domains:
+    - name: Application Management
+      description: Creating and managing low-code applications
+      resources:
+        - applications
+    - name: Data Connectivity
+      description: Connecting databases and APIs to power application data
+      resources:
+        - datasources
+
+  namespaces: []
+  binds: []

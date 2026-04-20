@@ -1,0 +1,20 @@
+{
+  "applicationId": "app-001-inventory",
+  "name": "Inventory Management",
+  "description": "Internal tool for tracking warehouse inventory",
+  "workspaceId": "ws-main-team",
+  "isPublic": false,
+  "createdAt": "2026-01-15T10:00:00Z",
+  "modifiedAt": "2026-04-10T14:30:00Z",
+  "pages": [
+    {
+      "name": "Dashboard"
+    },
+    {
+      "name": "Products"
+    },
+    {
+      "name": "Orders"
+    }
+  ]
+}

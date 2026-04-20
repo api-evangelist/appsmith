@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/appsmith/main/json-schema/application-schema.json",
+  "title": "Application",
+  "description": "An Appsmith low-code application",
+  "type": "object",
+  "properties": {
+    "applicationId": {
+      "type": "string",
+      "description": "Unique application identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Application name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Application description"
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "Workspace the application belongs to"
+    },
+    "isPublic": {
+      "type": "boolean",
+      "description": "Whether the application is publicly accessible"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Application creation timestamp"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last modification timestamp"
+    },
+    "pages": {
+      "type": "array",
+      "description": "Pages within the application",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "applicationId",
+    "name",
+    "workspaceId"
+  ]
+}

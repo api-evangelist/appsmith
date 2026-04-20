@@ -1,0 +1,75 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Appsmith Internal Tool Builder
+  description: >-
+    Workflow capability for building and managing internal tools using the Appsmith
+    low-code platform. Supports developers creating workflow applications with
+    connected datasources and team workspaces.
+  tags:
+    - Appsmith
+    - Low-Code
+    - Internal Tools
+    - Developer Productivity
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      APPSMITH_API_TOKEN: APPSMITH_API_TOKEN
+
+capability:
+  consumes:
+    - import: appsmith
+      location: ./shared/appsmith-api.yaml
+
+  exposes:
+    - type: mcp
+      port: 9090
+      namespace: internal-tool-mcp
+      transport: http
+      description: MCP server for AI-assisted internal tool building with Appsmith.
+      tools:
+        - name: list-internal-tools
+          description: Lists all low-code internal tool applications built in Appsmith
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appsmith.list-applications"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: create-internal-tool
+          description: Creates a new internal tool application in Appsmith
+          hints:
+            readOnly: false
+            destructive: false
+          call: "appsmith.create-application"
+          with:
+            name: "tools.name"
+            workspaceId: "tools.workspaceId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-team-workspaces
+          description: Lists workspaces available for organizing internal tools
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appsmith.list-workspaces"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-connected-datasources
+          description: Lists datasources connected to Appsmith for powering internal tools
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "appsmith.list-datasources"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/appsmith/main/json-structure/application-structure.json",
+  "title": "Application",
+  "description": "An Appsmith low-code application",
+  "type": "record",
+  "fields": [
+    {
+      "name": "applicationId",
+      "type": "string",
+      "description": "Unique application identifier"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Application name"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "description": "Application description"
+    },
+    {
+      "name": "workspaceId",
+      "type": "string",
+      "description": "Workspace identifier"
+    },
+    {
+      "name": "isPublic",
+      "type": "boolean",
+      "description": "Public accessibility flag"
+    },
+    {
+      "name": "createdAt",
+      "type": "string",
+      "description": "Creation timestamp"
+    },
+    {
+      "name": "modifiedAt",
+      "type": "string",
+      "description": "Last modification timestamp"
+    }
+  ]
+}

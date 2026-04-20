@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "appsmith": "https://www.appsmith.com/vocab#",
+    "applicationId": "schema:identifier",
+    "name": "schema:name",
+    "description": "schema:description",
+    "workspaceId": "schema:identifier",
+    "isPublic": "schema:isAccessibleForFree",
+    "createdAt": "schema:dateCreated",
+    "modifiedAt": "schema:dateModified",
+    "pages": "appsmith:pages",
+    "datasourceId": "schema:identifier",
+    "type": "schema:category"
+  }
+}

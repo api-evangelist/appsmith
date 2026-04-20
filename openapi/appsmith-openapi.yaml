@@ -1,0 +1,267 @@
+openapi: 3.0.3
+info:
+  title: Appsmith API
+  description: >-
+    API for the Appsmith open source low-code platform, enabling programmatic
+    management of applications, workspaces, datasources, pages, and widgets
+    for building internal tools and workflow applications.
+  version: 1.0.0
+  contact:
+    name: Appsmith
+    url: https://docs.appsmith.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: https://app.appsmith.com/api/v1
+    description: Appsmith Cloud API
+security:
+  - bearerAuth: []
+tags:
+  - name: Applications
+    description: Low-code application management
+  - name: Workspaces
+    description: Workspace organization and management
+  - name: Datasources
+    description: Connected datasource management
+paths:
+  /applications:
+    get:
+      operationId: listApplications
+      summary: Appsmith - List Applications
+      description: Returns a list of Appsmith low-code applications
+      tags:
+        - Applications
+      parameters:
+        - name: workspaceId
+          in: query
+          description: Filter by workspace identifier
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of applications
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Application'
+              examples:
+                ListApplicationsExample:
+                  x-microcks-default: true
+                  summary: Example applications list
+                  value:
+                    data:
+                      - applicationId: app-001-inventory
+                        name: Inventory Management
+                        workspaceId: ws-main-team
+                        isPublic: false
+                        createdAt: "2026-01-15T10:00:00Z"
+        '401':
+          description: Unauthorized - invalid or missing authentication token
+    post:
+      operationId: createApplication
+      summary: Appsmith - Create Application
+      description: Creates a new low-code application in Appsmith
+      tags:
+        - Applications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Application name
+                workspaceId:
+                  type: string
+                  description: Workspace to create the application in
+            examples:
+              CreateApplicationExample:
+                x-microcks-default: true
+                summary: Example application creation request
+                value:
+                  name: Customer Portal
+                  workspaceId: ws-main-team
+      responses:
+        '201':
+          description: Application created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized - invalid or missing authentication token
+  /applications/{applicationId}:
+    get:
+      operationId: getApplication
+      summary: Appsmith - Get Application
+      description: Returns details for a specific Appsmith application
+      tags:
+        - Applications
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          description: Unique application identifier
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Application details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+              examples:
+                GetApplicationExample:
+                  x-microcks-default: true
+                  summary: Example application detail
+                  value:
+                    applicationId: app-001-inventory
+                    name: Inventory Management
+                    description: Internal tool for tracking warehouse inventory
+                    workspaceId: ws-main-team
+                    isPublic: false
+                    createdAt: "2026-01-15T10:00:00Z"
+                    modifiedAt: "2026-04-10T14:30:00Z"
+        '404':
+          description: Application not found
+        '401':
+          description: Unauthorized - invalid or missing authentication token
+  /workspaces:
+    get:
+      operationId: listWorkspaces
+      summary: Appsmith - List Workspaces
+      description: Returns a list of workspaces available to the authenticated user
+      tags:
+        - Workspaces
+      responses:
+        '200':
+          description: A list of workspaces
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Workspace'
+              examples:
+                ListWorkspacesExample:
+                  x-microcks-default: true
+                  summary: Example workspaces list
+                  value:
+                    data:
+                      - workspaceId: ws-main-team
+                        name: Main Team
+                        createdAt: "2025-06-01T00:00:00Z"
+        '401':
+          description: Unauthorized - invalid or missing authentication token
+  /datasources:
+    get:
+      operationId: listDatasources
+      summary: Appsmith - List Datasources
+      description: Returns a list of datasources connected to Appsmith applications
+      tags:
+        - Datasources
+      responses:
+        '200':
+          description: A list of datasources
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Datasource'
+              examples:
+                ListDatasourcesExample:
+                  x-microcks-default: true
+                  summary: Example datasources list
+                  value:
+                    data:
+                      - datasourceId: ds-postgres-001
+                        name: Production PostgreSQL
+                        type: PostgreSQL
+                        workspaceId: ws-main-team
+        '401':
+          description: Unauthorized - invalid or missing authentication token
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Application:
+      title: Application
+      description: An Appsmith low-code application
+      type: object
+      properties:
+        applicationId:
+          type: string
+          description: Unique application identifier
+        name:
+          type: string
+          description: Application name
+        description:
+          type: string
+          description: Application description
+        workspaceId:
+          type: string
+          description: Workspace the application belongs to
+        isPublic:
+          type: boolean
+          description: Whether the application is publicly accessible
+        createdAt:
+          type: string
+          format: date-time
+          description: Application creation timestamp
+        modifiedAt:
+          type: string
+          format: date-time
+          description: Last modification timestamp
+    Workspace:
+      title: Workspace
+      description: An Appsmith workspace for organizing applications
+      type: object
+      properties:
+        workspaceId:
+          type: string
+          description: Unique workspace identifier
+        name:
+          type: string
+          description: Workspace name
+        createdAt:
+          type: string
+          format: date-time
+          description: Workspace creation timestamp
+    Datasource:
+      title: Datasource
+      description: A datasource connected to Appsmith applications
+      type: object
+      properties:
+        datasourceId:
+          type: string
+          description: Unique datasource identifier
+        name:
+          type: string
+          description: Datasource name
+        type:
+          type: string
+          description: Datasource type (PostgreSQL, MySQL, REST API, etc.)
+        workspaceId:
+          type: string
+          description: Workspace the datasource belongs to
