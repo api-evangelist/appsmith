@@ -51,6 +51,8 @@ apis:
     type: Vocabulary
   description: API for the Appsmith open source low-code platform, enabling programmatic management of applications, workspaces, and datasources for building internal tools.
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/appsmith
 - type: Website
   url: https://www.appsmith.com
 - type: Documentation
