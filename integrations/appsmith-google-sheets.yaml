@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Two-way sync between Appsmith and Google Sheets
+  description: Use a Google Sheet as an Appsmith datasource for non-technical editors - read and append rows from the Sheets v4 API, with Appsmith app metadata managed alongside.
+  tags:
+  - Appsmith
+  - Integration
+  - Productivity
+  - google-sheets
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    GOOGLE_SHEETS_API_KEY: GOOGLE_SHEETS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: datasources
+      path: /datasources
+      operations:
+      - name: listdatasources
+        method: GET
+        description: 'Appsmith: confirm the Sheets datasource is registered.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: applications
+      path: /applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: 'Appsmith: list apps backed by the Sheet.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: google-sheets
+    baseUri: https://sheets.googleapis.com
+    description: Google Sheets API v4 operations consumed by this integration.
+    resources:
+    - name: v4-spreadsheets-spreadsheetid-values-range
+      path: /v4/spreadsheets/{spreadsheetId}/values/{range}
+      operations:
+      - name: getvalues
+        method: GET
+        description: 'Google Sheets API v4: getValues'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: spreadsheetId
+          in: path
+          type: string
+          description: Path parameter spreadsheetId.
+          required: true
+        - name: range
+          in: path
+          type: string
+          description: Path parameter range.
+          required: true
+    - name: v4-spreadsheets-spreadsheetid-values-range-append
+      path: /v4/spreadsheets/{spreadsheetId}/values/{range}:append
+      operations:
+      - name: appendvalues
+        method: POST
+        description: 'Google Sheets API v4: appendValues'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: spreadsheetId
+          in: path
+          type: string
+          description: Path parameter spreadsheetId.
+          required: true
+        - name: range
+          in: path
+          type: string
+          description: Path parameter range.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: appsmith-google-sheets-mcp
+    description: MCP adapter for the appsmith-google-sheets integration.
+    tools:
+    - name: appsmith_google_sheets
+      description: Execute the appsmith google sheets integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-google-sheets-rest
+    port: 8080
+    description: REST adapter for the appsmith-google-sheets integration.
+    resources:
+    - path: /appsmith-google-sheets
+      name: appsmith-google-sheets
+      description: REST surface for the appsmith-google-sheets integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-google-sheets integration.
+        call: appsmith_google_sheets
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

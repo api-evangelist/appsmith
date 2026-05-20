@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Upload and list files from Appsmith into AWS S3
+  description: Let an Appsmith file-upload widget push directly into an S3 bucket - upload objects, list bucket contents, and surface URLs back to the Appsmith app.
+  tags:
+  - Appsmith
+  - Integration
+  - Storage
+  - aws-s3
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    AWS_S3_API_KEY: AWS_S3_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: datasources
+      path: /datasources
+      operations:
+      - name: listdatasources
+        method: GET
+        description: 'Appsmith: confirm S3 datasource is registered.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: applications-applicationid
+      path: /applications/{applicationId}
+      operations:
+      - name: getapplication
+        method: GET
+        description: 'Appsmith: fetch the app that owns the upload widget.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationId
+          in: path
+          type: string
+          description: Path parameter applicationId.
+          required: true
+  - type: http
+    namespace: aws-s3
+    baseUri: https://s3.amazonaws.com
+    description: AWS S3 REST API operations consumed by this integration.
+    resources:
+    - name: bucket-key
+      path: /{bucket}/{key}
+      operations:
+      - name: putobject
+        method: PUT
+        description: 'AWS S3 REST API: putObject'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: bucket
+          in: path
+          type: string
+          description: Path parameter bucket.
+          required: true
+        - name: key
+          in: path
+          type: string
+          description: Path parameter key.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: bucket
+      path: /{bucket}
+      operations:
+      - name: listobjects
+        method: GET
+        description: 'AWS S3 REST API: listObjects'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: bucket
+          in: path
+          type: string
+          description: Path parameter bucket.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: appsmith-aws-s3-mcp
+    description: MCP adapter for the appsmith-aws-s3 integration.
+    tools:
+    - name: appsmith_aws_s3
+      description: Execute the appsmith aws s3 integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-aws-s3-rest
+    port: 8080
+    description: REST adapter for the appsmith-aws-s3 integration.
+    resources:
+    - path: /appsmith-aws-s3
+      name: appsmith-aws-s3
+      description: REST surface for the appsmith-aws-s3 integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-aws-s3 integration.
+        call: appsmith_aws_s3
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

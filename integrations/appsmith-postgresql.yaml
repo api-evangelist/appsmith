@@ -1,0 +1,114 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Wire PostgreSQL as the canonical Appsmith datasource
+  description: Register PostgreSQL as an Appsmith datasource, then list Appsmith apps + datasources so an agent can wire a new internal tool to the right Postgres instance.
+  tags:
+  - Appsmith
+  - Integration
+  - Database
+  - postgresql
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    POSTGRESQL_API_KEY: POSTGRESQL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: datasources
+      path: /datasources
+      operations:
+      - name: listdatasources
+        method: GET
+        description: 'Appsmith: list datasources to confirm Postgres binding.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: applications
+      path: /applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: 'Appsmith: list applications consuming the Postgres datasource.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: postgresql
+    baseUri: https://postgres.example.com
+    description: PostgreSQL REST Proxy operations consumed by this integration.
+    resources:
+    - name: query
+      path: /query
+      operations:
+      - name: runquery
+        method: POST
+        description: 'PostgreSQL REST Proxy: runQuery'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tables
+      path: /tables
+      operations:
+      - name: listtables
+        method: GET
+        description: 'PostgreSQL REST Proxy: listTables'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  exposes:
+  - type: mcp
+    namespace: appsmith-postgresql-mcp
+    description: MCP adapter for the appsmith-postgresql integration.
+    tools:
+    - name: appsmith_postgresql
+      description: Execute the appsmith postgresql integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-postgresql-rest
+    port: 8080
+    description: REST adapter for the appsmith-postgresql integration.
+    resources:
+    - path: /appsmith-postgresql
+      name: appsmith-postgresql
+      description: REST surface for the appsmith-postgresql integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-postgresql integration.
+        call: appsmith_postgresql
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

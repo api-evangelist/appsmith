@@ -1,0 +1,119 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Wire MongoDB Atlas into Appsmith document-store admin panels
+  description: Use MongoDB Atlas Data API as an Appsmith datasource so an internal admin panel can read and update documents directly from collections.
+  tags:
+  - Appsmith
+  - Integration
+  - Database
+  - mongodb
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    MONGODB_API_KEY: MONGODB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: datasources
+      path: /datasources
+      operations:
+      - name: listdatasources
+        method: GET
+        description: 'Appsmith: confirm Mongo datasource is registered.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: applications
+      path: /applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: 'Appsmith: list apps backed by Mongo.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: mongodb
+    baseUri: https://data.mongodb-api.com
+    description: MongoDB Atlas Data API operations consumed by this integration.
+    resources:
+    - name: app-data-api-endpoint-data-v1-action-find
+      path: /app/data-api/endpoint/data/v1/action/find
+      operations:
+      - name: find
+        method: POST
+        description: 'MongoDB Atlas Data API: find'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: app-data-api-endpoint-data-v1-action-updateone
+      path: /app/data-api/endpoint/data/v1/action/updateOne
+      operations:
+      - name: updateone
+        method: POST
+        description: 'MongoDB Atlas Data API: updateOne'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: appsmith-mongodb-mcp
+    description: MCP adapter for the appsmith-mongodb integration.
+    tools:
+    - name: appsmith_mongodb
+      description: Execute the appsmith mongodb integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-mongodb-rest
+    port: 8080
+    description: REST adapter for the appsmith-mongodb integration.
+    resources:
+    - path: /appsmith-mongodb
+      name: appsmith-mongodb
+      description: REST surface for the appsmith-mongodb integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-mongodb integration.
+        call: appsmith_mongodb
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,279 @@
+# Curated Appsmith integrations grouped by category.
+# Each entry becomes one Naftiko capability YAML in integrations/.
+# Domain: low-code internal tools, dashboards, admin panels.
+# Appsmith operations are sourced from temp/appsmith/openapi/appsmith-openapi.yaml.
+
+# Databases (4)
+- partner: postgresql
+  name: Wire PostgreSQL as the canonical Appsmith datasource
+  category: Database
+  use_case: Register PostgreSQL as an Appsmith datasource, then list Appsmith apps + datasources so an agent can wire a new internal tool to the right Postgres instance.
+  partner_baseUri: https://postgres.example.com
+  partner_api: PostgreSQL REST Proxy
+  provider_ops:
+    - method: GET
+      path: /datasources
+      name: listDatasources
+      description: 'Appsmith: list datasources to confirm Postgres binding.'
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list applications consuming the Postgres datasource.'
+  partner_ops:
+    - method: POST
+      path: /query
+      name: runQuery
+    - method: GET
+      path: /tables
+      name: listTables
+
+- partner: mysql
+  name: Connect MySQL to Appsmith for operational dashboards
+  category: Database
+  use_case: Bind a MySQL instance to Appsmith so the low-code app can read and write operational data, then expose the read queries as a Naftiko REST + MCP surface for agents.
+  partner_baseUri: https://mysql.example.com
+  partner_api: MySQL REST Proxy
+  provider_ops:
+    - method: GET
+      path: /datasources
+      name: listDatasources
+      description: 'Appsmith: confirm MySQL datasource is registered.'
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list apps backed by MySQL.'
+  partner_ops:
+    - method: POST
+      path: /query
+      name: runQuery
+
+- partner: snowflake
+  name: Ship Appsmith analytics dashboards backed by Snowflake
+  category: Data warehouse
+  use_case: Drive an Appsmith dashboard from Snowflake by registering Snowflake as a datasource and running parameterized SQL via the Snowflake SQL API.
+  partner_baseUri: https://account.snowflakecomputing.com
+  partner_api: Snowflake SQL API
+  provider_ops:
+    - method: GET
+      path: /datasources
+      name: listDatasources
+      description: 'Appsmith: list datasources to confirm the Snowflake binding.'
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list dashboards consuming Snowflake.'
+  partner_ops:
+    - method: POST
+      path: /api/v2/statements
+      name: submitStatement
+    - method: GET
+      path: /api/v2/statements/{statementHandle}
+      name: getStatement
+
+- partner: mongodb
+  name: Wire MongoDB Atlas into Appsmith document-store admin panels
+  category: Database
+  use_case: Use MongoDB Atlas Data API as an Appsmith datasource so an internal admin panel can read and update documents directly from collections.
+  partner_baseUri: https://data.mongodb-api.com
+  partner_api: MongoDB Atlas Data API
+  provider_ops:
+    - method: GET
+      path: /datasources
+      name: listDatasources
+      description: 'Appsmith: confirm Mongo datasource is registered.'
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list apps backed by Mongo.'
+  partner_ops:
+    - method: POST
+      path: /app/data-api/endpoint/data/v1/action/find
+      name: find
+    - method: POST
+      path: /app/data-api/endpoint/data/v1/action/updateOne
+      name: updateOne
+
+# SaaS data sources (3)
+- partner: salesforce
+  name: Build a Salesforce contact admin panel in Appsmith
+  category: CRM
+  use_case: Stand up an Appsmith internal tool that reads and updates Salesforce Contacts, with Appsmith app metadata managed alongside the Salesforce REST calls.
+  partner_baseUri: https://yourinstance.my.salesforce.com
+  partner_api: Salesforce REST API
+  provider_ops:
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list Salesforce admin-panel apps.'
+    - method: POST
+      path: /applications
+      name: createApplication
+      description: 'Appsmith: provision a new admin-panel app for a Salesforce workspace.'
+  partner_ops:
+    - method: GET
+      path: /services/data/v60.0/sobjects/Contact/{id}
+      name: getContact
+    - method: PATCH
+      path: /services/data/v60.0/sobjects/Contact/{id}
+      name: updateContact
+
+- partner: hubspot
+  name: HubSpot CRM admin panel built on Appsmith
+  category: CRM
+  use_case: Drive a HubSpot internal tool from Appsmith - list applications, then read and write HubSpot contacts and deals through the CRM API for support / ops users.
+  partner_baseUri: https://api.hubapi.com
+  partner_api: HubSpot CRM API
+  provider_ops:
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list HubSpot admin apps.'
+    - method: GET
+      path: /applications/{applicationId}
+      name: getApplication
+      description: 'Appsmith: fetch a HubSpot admin app for routing decisions.'
+  partner_ops:
+    - method: GET
+      path: /crm/v3/objects/contacts/{contactId}
+      name: getContact
+    - method: PATCH
+      path: /crm/v3/objects/contacts/{contactId}
+      name: updateContact
+
+- partner: stripe
+  name: Stripe billing admin panel in Appsmith
+  category: Billing
+  use_case: Build an Appsmith internal tool that lets support staff look up Stripe customers and issue refunds, with the Appsmith app surface registered as a Naftiko capability.
+  partner_baseUri: https://api.stripe.com
+  partner_api: Stripe API
+  provider_ops:
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list billing admin-panel apps.'
+    - method: POST
+      path: /applications
+      name: createApplication
+      description: 'Appsmith: provision a new Stripe billing admin app.'
+  partner_ops:
+    - method: GET
+      path: /v1/customers/{customer}
+      name: getCustomer
+    - method: POST
+      path: /v1/refunds
+      name: createRefund
+
+# Notifications / messaging (1)
+- partner: slack
+  name: Notify Slack from Appsmith app actions
+  category: Notifications
+  use_case: When an Appsmith app action runs (button click, form submit), post a structured Slack message via Incoming Webhook so the team gets a real-time audit trail.
+  partner_baseUri: https://hooks.slack.com
+  partner_api: Slack Incoming Webhooks
+  provider_ops:
+    - method: GET
+      path: /applications/{applicationId}
+      name: getApplication
+      description: 'Appsmith: fetch the app that triggered the Slack post.'
+    - method: GET
+      path: /workspaces
+      name: listWorkspaces
+      description: 'Appsmith: list workspaces to route messages by tenant.'
+  partner_ops:
+    - method: POST
+      path: /services/{T}/{B}/{X}
+      name: postMessage
+
+# Productivity / files (3)
+- partner: google-sheets
+  name: Two-way sync between Appsmith and Google Sheets
+  category: Productivity
+  use_case: Use a Google Sheet as an Appsmith datasource for non-technical editors - read and append rows from the Sheets v4 API, with Appsmith app metadata managed alongside.
+  partner_baseUri: https://sheets.googleapis.com
+  partner_api: Google Sheets API v4
+  provider_ops:
+    - method: GET
+      path: /datasources
+      name: listDatasources
+      description: 'Appsmith: confirm the Sheets datasource is registered.'
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list apps backed by the Sheet.'
+  partner_ops:
+    - method: GET
+      path: /v4/spreadsheets/{spreadsheetId}/values/{range}
+      name: getValues
+    - method: POST
+      path: /v4/spreadsheets/{spreadsheetId}/values/{range}:append
+      name: appendValues
+
+- partner: aws-s3
+  name: Upload and list files from Appsmith into AWS S3
+  category: Storage
+  use_case: Let an Appsmith file-upload widget push directly into an S3 bucket - upload objects, list bucket contents, and surface URLs back to the Appsmith app.
+  partner_baseUri: https://s3.amazonaws.com
+  partner_api: AWS S3 REST API
+  provider_ops:
+    - method: GET
+      path: /datasources
+      name: listDatasources
+      description: 'Appsmith: confirm S3 datasource is registered.'
+    - method: GET
+      path: /applications/{applicationId}
+      name: getApplication
+      description: 'Appsmith: fetch the app that owns the upload widget.'
+  partner_ops:
+    - method: PUT
+      path: /{bucket}/{key}
+      name: putObject
+    - method: GET
+      path: /{bucket}
+      name: listObjects
+
+- partner: rest-api
+  name: Wire an arbitrary REST API into Appsmith via Naftiko
+  category: Integration
+  use_case: Use any third-party REST API as an Appsmith datasource - register the partner API, list Appsmith apps that consume it, and expose a unified MCP + REST surface for agents.
+  partner_baseUri: https://api.example.com
+  partner_api: Generic REST API
+  provider_ops:
+    - method: GET
+      path: /datasources
+      name: listDatasources
+      description: 'Appsmith: confirm the REST datasource is registered.'
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list apps consuming the REST datasource.'
+  partner_ops:
+    - method: GET
+      path: /{resource}
+      name: getResource
+    - method: POST
+      path: /{resource}
+      name: createResource
+
+# Source control / workflow (1)
+- partner: github
+  name: Trigger GitHub Actions workflows from Appsmith
+  category: Workflow
+  use_case: Let an Appsmith admin button trigger a GitHub Actions workflow_dispatch event - useful for ops runbooks, deployments, and data jobs gated behind an internal UI.
+  partner_baseUri: https://api.github.com
+  partner_api: GitHub REST API
+  provider_ops:
+    - method: GET
+      path: /applications/{applicationId}
+      name: getApplication
+      description: 'Appsmith: fetch the runbook app that owns this trigger.'
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: 'Appsmith: list runbook apps mapped to GitHub workflows.'
+  partner_ops:
+    - method: POST
+      path: /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+      name: createWorkflowDispatch
+    - method: GET
+      path: /repos/{owner}/{repo}/actions/runs
+      name: listWorkflowRuns

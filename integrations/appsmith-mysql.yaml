@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Connect MySQL to Appsmith for operational dashboards
+  description: Bind a MySQL instance to Appsmith so the low-code app can read and write operational data, then expose the read queries as a Naftiko REST + MCP surface for agents.
+  tags:
+  - Appsmith
+  - Integration
+  - Database
+  - mysql
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    MYSQL_API_KEY: MYSQL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: datasources
+      path: /datasources
+      operations:
+      - name: listdatasources
+        method: GET
+        description: 'Appsmith: confirm MySQL datasource is registered.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: applications
+      path: /applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: 'Appsmith: list apps backed by MySQL.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: mysql
+    baseUri: https://mysql.example.com
+    description: MySQL REST Proxy operations consumed by this integration.
+    resources:
+    - name: query
+      path: /query
+      operations:
+      - name: runquery
+        method: POST
+        description: 'MySQL REST Proxy: runQuery'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: appsmith-mysql-mcp
+    description: MCP adapter for the appsmith-mysql integration.
+    tools:
+    - name: appsmith_mysql
+      description: Execute the appsmith mysql integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-mysql-rest
+    port: 8080
+    description: REST adapter for the appsmith-mysql integration.
+    resources:
+    - path: /appsmith-mysql
+      name: appsmith-mysql
+      description: REST surface for the appsmith-mysql integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-mysql integration.
+        call: appsmith_mysql
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

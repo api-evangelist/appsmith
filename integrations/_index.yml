@@ -1,0 +1,60 @@
+- slug: appsmith-postgresql
+  label: Wire PostgreSQL as the canonical Appsmith datasource
+  partner: postgresql
+  category: Database
+  use_case: Register PostgreSQL as an Appsmith datasource, then list Appsmith apps + datasources so an agent can wire a new internal tool to the right Postgres instance.
+- slug: appsmith-mysql
+  label: Connect MySQL to Appsmith for operational dashboards
+  partner: mysql
+  category: Database
+  use_case: Bind a MySQL instance to Appsmith so the low-code app can read and write operational data, then expose the read queries as a Naftiko REST + MCP surface for agents.
+- slug: appsmith-snowflake
+  label: Ship Appsmith analytics dashboards backed by Snowflake
+  partner: snowflake
+  category: Data warehouse
+  use_case: Drive an Appsmith dashboard from Snowflake by registering Snowflake as a datasource and running parameterized SQL via the Snowflake SQL API.
+- slug: appsmith-mongodb
+  label: Wire MongoDB Atlas into Appsmith document-store admin panels
+  partner: mongodb
+  category: Database
+  use_case: Use MongoDB Atlas Data API as an Appsmith datasource so an internal admin panel can read and update documents directly from collections.
+- slug: appsmith-salesforce
+  label: Build a Salesforce contact admin panel in Appsmith
+  partner: salesforce
+  category: CRM
+  use_case: Stand up an Appsmith internal tool that reads and updates Salesforce Contacts, with Appsmith app metadata managed alongside the Salesforce REST calls.
+- slug: appsmith-hubspot
+  label: HubSpot CRM admin panel built on Appsmith
+  partner: hubspot
+  category: CRM
+  use_case: Drive a HubSpot internal tool from Appsmith - list applications, then read and write HubSpot contacts and deals through the CRM API for support / ops users.
+- slug: appsmith-stripe
+  label: Stripe billing admin panel in Appsmith
+  partner: stripe
+  category: Billing
+  use_case: Build an Appsmith internal tool that lets support staff look up Stripe customers and issue refunds, with the Appsmith app surface registered as a Naftiko capability.
+- slug: appsmith-slack
+  label: Notify Slack from Appsmith app actions
+  partner: slack
+  category: Notifications
+  use_case: When an Appsmith app action runs (button click, form submit), post a structured Slack message via Incoming Webhook so the team gets a real-time audit trail.
+- slug: appsmith-google-sheets
+  label: Two-way sync between Appsmith and Google Sheets
+  partner: google-sheets
+  category: Productivity
+  use_case: Use a Google Sheet as an Appsmith datasource for non-technical editors - read and append rows from the Sheets v4 API, with Appsmith app metadata managed alongside.
+- slug: appsmith-aws-s3
+  label: Upload and list files from Appsmith into AWS S3
+  partner: aws-s3
+  category: Storage
+  use_case: Let an Appsmith file-upload widget push directly into an S3 bucket - upload objects, list bucket contents, and surface URLs back to the Appsmith app.
+- slug: appsmith-rest-api
+  label: Wire an arbitrary REST API into Appsmith via Naftiko
+  partner: rest-api
+  category: Integration
+  use_case: Use any third-party REST API as an Appsmith datasource - register the partner API, list Appsmith apps that consume it, and expose a unified MCP + REST surface for agents.
+- slug: appsmith-github
+  label: Trigger GitHub Actions workflows from Appsmith
+  partner: github
+  category: Workflow
+  use_case: Let an Appsmith admin button trigger a GitHub Actions workflow_dispatch event - useful for ops runbooks, deployments, and data jobs gated behind an internal UI.

@@ -1,0 +1,144 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Trigger GitHub Actions workflows from Appsmith
+  description: Let an Appsmith admin button trigger a GitHub Actions workflow_dispatch event - useful for ops runbooks, deployments, and data jobs gated behind an internal UI.
+  tags:
+  - Appsmith
+  - Integration
+  - Workflow
+  - github
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    GITHUB_API_KEY: GITHUB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: applications-applicationid
+      path: /applications/{applicationId}
+      operations:
+      - name: getapplication
+        method: GET
+        description: 'Appsmith: fetch the runbook app that owns this trigger.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationId
+          in: path
+          type: string
+          description: Path parameter applicationId.
+          required: true
+    - name: applications
+      path: /applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: 'Appsmith: list runbook apps mapped to GitHub workflows.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: github
+    baseUri: https://api.github.com
+    description: GitHub REST API operations consumed by this integration.
+    resources:
+    - name: repos-owner-repo-actions-workflows-workflow-id-dispatches
+      path: /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+      operations:
+      - name: createworkflowdispatch
+        method: POST
+        description: 'GitHub REST API: createWorkflowDispatch'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+        - name: workflow_id
+          in: path
+          type: string
+          description: Path parameter workflow_id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: repos-owner-repo-actions-runs
+      path: /repos/{owner}/{repo}/actions/runs
+      operations:
+      - name: listworkflowruns
+        method: GET
+        description: 'GitHub REST API: listWorkflowRuns'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: appsmith-github-mcp
+    description: MCP adapter for the appsmith-github integration.
+    tools:
+    - name: appsmith_github
+      description: Execute the appsmith github integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-github-rest
+    port: 8080
+    description: REST adapter for the appsmith-github integration.
+    resources:
+    - path: /appsmith-github
+      name: appsmith-github
+      description: REST surface for the appsmith-github integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-github integration.
+        call: appsmith_github
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

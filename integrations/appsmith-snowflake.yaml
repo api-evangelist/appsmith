@@ -1,0 +1,119 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Ship Appsmith analytics dashboards backed by Snowflake
+  description: Drive an Appsmith dashboard from Snowflake by registering Snowflake as a datasource and running parameterized SQL via the Snowflake SQL API.
+  tags:
+  - Appsmith
+  - Integration
+  - Data warehouse
+  - snowflake
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    SNOWFLAKE_API_KEY: SNOWFLAKE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: datasources
+      path: /datasources
+      operations:
+      - name: listdatasources
+        method: GET
+        description: 'Appsmith: list datasources to confirm the Snowflake binding.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: applications
+      path: /applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: 'Appsmith: list dashboards consuming Snowflake.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: snowflake
+    baseUri: https://account.snowflakecomputing.com
+    description: Snowflake SQL API operations consumed by this integration.
+    resources:
+    - name: api-v2-statements
+      path: /api/v2/statements
+      operations:
+      - name: submitstatement
+        method: POST
+        description: 'Snowflake SQL API: submitStatement'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-statements-statementhandle
+      path: /api/v2/statements/{statementHandle}
+      operations:
+      - name: getstatement
+        method: GET
+        description: 'Snowflake SQL API: getStatement'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: statementHandle
+          in: path
+          type: string
+          description: Path parameter statementHandle.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: appsmith-snowflake-mcp
+    description: MCP adapter for the appsmith-snowflake integration.
+    tools:
+    - name: appsmith_snowflake
+      description: Execute the appsmith snowflake integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-snowflake-rest
+    port: 8080
+    description: REST adapter for the appsmith-snowflake integration.
+    resources:
+    - path: /appsmith-snowflake
+      name: appsmith-snowflake
+      description: REST surface for the appsmith-snowflake integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-snowflake integration.
+        call: appsmith_snowflake
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Notify Slack from Appsmith app actions
+  description: When an Appsmith app action runs (button click, form submit), post a structured Slack message via Incoming Webhook so the team gets a real-time audit trail.
+  tags:
+  - Appsmith
+  - Integration
+  - Notifications
+  - slack
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    APPSMITH_API_KEY: APPSMITH_API_KEY
+    SLACK_API_KEY: SLACK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: appsmith
+    baseUri: https://app.appsmith.com/api
+    description: Appsmith API operations consumed by this integration.
+    resources:
+    - name: applications-applicationid
+      path: /applications/{applicationId}
+      operations:
+      - name: getapplication
+        method: GET
+        description: 'Appsmith: fetch the app that triggered the Slack post.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationId
+          in: path
+          type: string
+          description: Path parameter applicationId.
+          required: true
+    - name: workspaces
+      path: /workspaces
+      operations:
+      - name: listworkspaces
+        method: GET
+        description: 'Appsmith: list workspaces to route messages by tenant.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: slack
+    baseUri: https://hooks.slack.com
+    description: Slack Incoming Webhooks operations consumed by this integration.
+    resources:
+    - name: services-t-b-x
+      path: /services/{T}/{B}/{X}
+      operations:
+      - name: postmessage
+        method: POST
+        description: 'Slack Incoming Webhooks: postMessage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: T
+          in: path
+          type: string
+          description: Path parameter T.
+          required: true
+        - name: B
+          in: path
+          type: string
+          description: Path parameter B.
+          required: true
+        - name: X
+          in: path
+          type: string
+          description: Path parameter X.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: appsmith-slack-mcp
+    description: MCP adapter for the appsmith-slack integration.
+    tools:
+    - name: appsmith_slack
+      description: Execute the appsmith slack integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: appsmith-slack-rest
+    port: 8080
+    description: REST adapter for the appsmith-slack integration.
+    resources:
+    - path: /appsmith-slack
+      name: appsmith-slack
+      description: REST surface for the appsmith-slack integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the appsmith-slack integration.
+        call: appsmith_slack
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
