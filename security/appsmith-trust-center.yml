@@ -1,0 +1,12 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://security.appsmith.com/
+url: https://security.appsmith.com/
+certifications:
+- SOC 2
+evidence:
+- source: https://security.appsmith.com/
+  keywords:
+  - soc 2
+  - trust center
