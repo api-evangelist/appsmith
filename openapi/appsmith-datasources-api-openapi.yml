@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Appsmith Applications Datasources API
+  description: API for the Appsmith open source low-code platform, enabling programmatic management of applications, workspaces, datasources, pages, and widgets for building internal tools and workflow applications.
+  version: 1.0.0
+  contact:
+    name: Appsmith
+    url: https://docs.appsmith.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://app.appsmith.com/api/v1
+  description: Appsmith Cloud API
+security:
+- bearerAuth: []
+tags:
+- name: Datasources
+  description: Connected datasource management
+paths:
+  /datasources:
+    get:
+      operationId: listDatasources
+      summary: Appsmith - List Datasources
+      description: Returns a list of datasources connected to Appsmith applications
+      tags:
+      - Datasources
+      responses:
+        '200':
+          description: A list of datasources
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Datasource'
+              examples:
+                ListDatasourcesExample:
+                  x-microcks-default: true
+                  summary: Example datasources list
+                  value:
+                    data:
+                    - datasourceId: ds-postgres-001
+                      name: Production PostgreSQL
+                      type: PostgreSQL
+                      workspaceId: ws-main-team
+        '401':
+          description: Unauthorized - invalid or missing authentication token
+components:
+  schemas:
+    Datasource:
+      title: Datasource
+      description: A datasource connected to Appsmith applications
+      type: object
+      properties:
+        datasourceId:
+          type: string
+          description: Unique datasource identifier
+        name:
+          type: string
+          description: Datasource name
+        type:
+          type: string
+          description: Datasource type (PostgreSQL, MySQL, REST API, etc.)
+        workspaceId:
+          type: string
+          description: Workspace the datasource belongs to
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Appsmith Applications Workspaces API
+  description: API for the Appsmith open source low-code platform, enabling programmatic management of applications, workspaces, datasources, pages, and widgets for building internal tools and workflow applications.
+  version: 1.0.0
+  contact:
+    name: Appsmith
+    url: https://docs.appsmith.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://app.appsmith.com/api/v1
+  description: Appsmith Cloud API
+security:
+- bearerAuth: []
+tags:
+- name: Workspaces
+  description: Workspace organization and management
+paths:
+  /workspaces:
+    get:
+      operationId: listWorkspaces
+      summary: Appsmith - List Workspaces
+      description: Returns a list of workspaces available to the authenticated user
+      tags:
+      - Workspaces
+      responses:
+        '200':
+          description: A list of workspaces
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Workspace'
+              examples:
+                ListWorkspacesExample:
+                  x-microcks-default: true
+                  summary: Example workspaces list
+                  value:
+                    data:
+                    - workspaceId: ws-main-team
+                      name: Main Team
+                      createdAt: '2025-06-01T00:00:00Z'
+        '401':
+          description: Unauthorized - invalid or missing authentication token
+components:
+  schemas:
+    Workspace:
+      title: Workspace
+      description: An Appsmith workspace for organizing applications
+      type: object
+      properties:
+        workspaceId:
+          type: string
+          description: Unique workspace identifier
+        name:
+          type: string
+          description: Workspace name
+        createdAt:
+          type: string
+          format: date-time
+          description: Workspace creation timestamp
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
