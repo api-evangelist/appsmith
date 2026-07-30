@@ -3,7 +3,20 @@ name: Appsmith
 description: >-
   Appsmith is an open source low-code platform for building internal tools and workflow applications.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appsmith.png
 tags:
   - Low-Code
   - Open Source
@@ -16,40 +29,99 @@ created: 2026-03-27
 modified: '2026-04-19'
 specificationVersion: 0.19
 apis:
-  - aid: appsmith:appsmith-api
-    name: Appsmith API
-    tags:
-    - Low-Code
-    - Applications
-    - Workspaces
-    - Datasources
-    humanURL: https://docs.appsmith.com
-    properties:
-    - url: https://www.appsmith.com
-      type: Website
-    - url: https://docs.appsmith.com
-      type: Documentation
-    - url: https://github.com/appsmithorg/appsmith
-      type: GitHubRepository
-    - url: openapi/appsmith-openapi.yaml
-      type: OpenAPI
-    - url: json-schema/application-schema.json
-      type: JSONSchema
-    - url: json-structure/application-structure.json
-      type: JSONStructure
-    - url: examples/application-example.json
-      type: Examples
-    - url: json-ld/appsmith-context.jsonld
-      type: JSONLD
-    - url: rules/appsmith-spectral-rules.yml
-      type: SpectralRules
-    - url: capabilities/shared/appsmith-api.yaml
-      type: X-NaftikoCapability
-    - url: capabilities/internal-tool-builder.yaml
-      type: X-NaftikoCapability
-    - url: vocabulary/appsmith-vocabulary.yaml
-      type: Vocabulary
-    description: API for the Appsmith open source low-code platform, enabling programmatic management of applications, workspaces, and datasources for building internal tools.
+- aid: appsmith:appsmith-applications-api
+  name: Appsmith Applications API
+  description: Low-code application management
+  humanURL: https://docs.appsmith.com
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/appsmith-applications-api-openapi.yml
+  - type: Website
+    url: https://www.appsmith.com
+  - type: Documentation
+    url: https://docs.appsmith.com
+  - type: GitHubRepository
+    url: https://github.com/appsmithorg/appsmith
+  - type: JSONSchema
+    url: json-schema/application-schema.json
+  - type: JSONStructure
+    url: json-structure/application-structure.json
+  - type: Examples
+    url: examples/application-example.json
+  - type: JSONLD
+    url: json-ld/appsmith-context.jsonld
+  - type: SpectralRules
+    url: rules/appsmith-spectral-rules.yml
+  - type: X-NaftikoCapability
+    url: capabilities/shared/appsmith-api.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/internal-tool-builder.yaml
+  - type: Vocabulary
+    url: vocabulary/appsmith-vocabulary.yaml
+- aid: appsmith:appsmith-datasources-api
+  name: Appsmith Datasources API
+  description: Connected datasource management
+  humanURL: https://docs.appsmith.com
+  tags:
+  - Datasources
+  properties:
+  - type: OpenAPI
+    url: openapi/appsmith-datasources-api-openapi.yml
+  - type: Website
+    url: https://www.appsmith.com
+  - type: Documentation
+    url: https://docs.appsmith.com
+  - type: GitHubRepository
+    url: https://github.com/appsmithorg/appsmith
+  - type: JSONSchema
+    url: json-schema/application-schema.json
+  - type: JSONStructure
+    url: json-structure/application-structure.json
+  - type: Examples
+    url: examples/application-example.json
+  - type: JSONLD
+    url: json-ld/appsmith-context.jsonld
+  - type: SpectralRules
+    url: rules/appsmith-spectral-rules.yml
+  - type: X-NaftikoCapability
+    url: capabilities/shared/appsmith-api.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/internal-tool-builder.yaml
+  - type: Vocabulary
+    url: vocabulary/appsmith-vocabulary.yaml
+- aid: appsmith:appsmith-workspaces-api
+  name: Appsmith Workspaces API
+  description: Workspace organization and management
+  humanURL: https://docs.appsmith.com
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/appsmith-workspaces-api-openapi.yml
+  - type: Website
+    url: https://www.appsmith.com
+  - type: Documentation
+    url: https://docs.appsmith.com
+  - type: GitHubRepository
+    url: https://github.com/appsmithorg/appsmith
+  - type: JSONSchema
+    url: json-schema/application-schema.json
+  - type: JSONStructure
+    url: json-structure/application-structure.json
+  - type: Examples
+    url: examples/application-example.json
+  - type: JSONLD
+    url: json-ld/appsmith-context.jsonld
+  - type: SpectralRules
+    url: rules/appsmith-spectral-rules.yml
+  - type: X-NaftikoCapability
+    url: capabilities/shared/appsmith-api.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/internal-tool-builder.yaml
+  - type: Vocabulary
+    url: vocabulary/appsmith-vocabulary.yaml
 common:
   - type: AgenticAccess
     url: agentic-access/appsmith-agentic-access.yml
