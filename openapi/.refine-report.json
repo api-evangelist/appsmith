@@ -1,0 +1,18 @@
+{
+  "provider": "appsmith",
+  "sources": [
+    "appsmith-applications-api-openapi.yml",
+    "appsmith-datasources-api-openapi.yml",
+    "appsmith-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "appsmith-applications-api-openapi.yml",
+    "appsmith-datasources-api-openapi.yml",
+    "appsmith-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
