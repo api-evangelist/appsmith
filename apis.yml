@@ -54,10 +54,6 @@ apis:
     url: json-ld/appsmith-context.jsonld
   - type: SpectralRules
     url: rules/appsmith-spectral-rules.yml
-  - type: X-NaftikoCapability
-    url: capabilities/shared/appsmith-api.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/internal-tool-builder.yaml
   - type: Vocabulary
     url: vocabulary/appsmith-vocabulary.yaml
 - aid: appsmith:appsmith-datasources-api
@@ -85,10 +81,6 @@ apis:
     url: json-ld/appsmith-context.jsonld
   - type: SpectralRules
     url: rules/appsmith-spectral-rules.yml
-  - type: X-NaftikoCapability
-    url: capabilities/shared/appsmith-api.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/internal-tool-builder.yaml
   - type: Vocabulary
     url: vocabulary/appsmith-vocabulary.yaml
 - aid: appsmith:appsmith-workspaces-api
@@ -116,13 +108,22 @@ apis:
     url: json-ld/appsmith-context.jsonld
   - type: SpectralRules
     url: rules/appsmith-spectral-rules.yml
-  - type: X-NaftikoCapability
-    url: capabilities/shared/appsmith-api.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/internal-tool-builder.yaml
   - type: Vocabulary
     url: vocabulary/appsmith-vocabulary.yaml
 common:
+  - type: IssueTracker
+    url: https://github.com/appsmithorg/appsmith/issues
+  - type: Releases
+    url: https://github.com/appsmithorg/appsmith/releases
+  - type: SecurityPolicy
+    url: https://github.com/appsmithorg/appsmith/blob/release/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/appsmithorg/appsmith/blob/release/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/appsmithorg/appsmith/blob/release/CONTRIBUTING.md
+  - type: License
+    name: Apache-2.0
+    url: https://github.com/appsmithorg/appsmith/blob/release/LICENSE
   - type: AgenticAccess
     url: agentic-access/appsmith-agentic-access.yml
   - type: TrustCenter
