@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Appsmith Applications API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Appsmith - List Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.appsmith.com/api/v1/applications",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workspace identifier"
+              }
+            ]
+          },
+          "docs": "Returns a list of Appsmith low-code applications"
+        },
+        {
+          "info": {
+            "name": "Appsmith - Create Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.appsmith.com/api/v1/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new low-code application in Appsmith"
+        },
+        {
+          "info": {
+            "name": "Appsmith - Get Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.appsmith.com/api/v1/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique application identifier"
+              }
+            ]
+          },
+          "docs": "Returns details for a specific Appsmith application"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

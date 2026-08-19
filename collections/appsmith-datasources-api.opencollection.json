@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Appsmith Applications Datasources API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Datasources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Appsmith - List Datasources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.appsmith.com/api/v1/datasources"
+          },
+          "docs": "Returns a list of datasources connected to Appsmith applications"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
