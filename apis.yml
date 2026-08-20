@@ -19,6 +19,12 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/appsmith.png
 tags:
   - Low-Code
+  - Open-Source
+  - Internal Tools
+  - Workflow-Automation
+  - Developer Tools
+tags_raw:
+  - Low-Code
   - Open Source
   - Internal Tools
   - Workflow Automation
@@ -34,6 +40,8 @@ apis:
   description: Low-code application management
   humanURL: https://docs.appsmith.com
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -61,6 +69,8 @@ apis:
   description: Connected datasource management
   humanURL: https://docs.appsmith.com
   tags:
+  - Data Sources
+  tags_raw:
   - Datasources
   properties:
   - type: OpenAPI
