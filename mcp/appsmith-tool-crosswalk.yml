@@ -1,0 +1,169 @@
+generated: '2026-09-04'
+method: derived
+source: mcp/appsmith-mcp.yml + openapi/appsmith-applications-api-openapi.yml, openapi/appsmith-datasources-api-openapi.yml,
+  openapi/appsmith-workspaces-api-openapi.yml
+name: Appsmith MCP <-> REST tool crosswalk
+note: 'NO BINDINGS ARE ASSERTED. Appsmith publishes no machine-readable REST contract: the Spring server carries a
+  springdoc surface but application-ce.properties ships springdoc.api-docs.enabled=false / springdoc.swagger-ui.enabled=false,
+  and OpenApiDocsAuthTest.java asserts /v3/docs and /v3/swagger-ui.html return 401 unauthenticated (GHSA-v6jh-fx3m-7xhw).
+  A live probe of https://app.appsmith.com/api/v3/docs returned 401 on 2026-09-04. The three OpenAPI files in this
+  repo are a 5-operation API Evangelist scaffold, NOT a provider document, and they do not survive contact with the
+  live API: GET https://app.appsmith.com/api/v1/applications (the scaffold operation listApplications) returns HTTP
+  405 METHOD_NOT_ALLOWED. Binding real MCP tools to those operationIds would manufacture a mapping that does not exist,
+  so every tool is recorded as mcp_only.'
+surfaces:
+  openapi:
+    present: false
+    gated: true
+    paths:
+    - /v3/docs
+    - /v3/swagger
+    status: disabled by default (springdoc.api-docs.enabled=false) and 401 when enabled
+    evidence: https://app.appsmith.com/api/v3/docs -> 401
+  rest:
+    present: true
+    base: https://app.appsmith.com/api/v1
+    documented: false
+    note: The REST surface is live and answers with the responseMeta envelope, but is documented only as internal
+      editor traffic — there is no public API reference.
+  graphql:
+    present: false
+    note: Appsmith consumes GraphQL as a datasource type (create_graphql_query); it does not expose a GraphQL API
+      of its own.
+  mcp:
+    present: true
+    endpoint: https://{your-appsmith-instance}/mcp
+    gated: true
+    note: Off by default; requires APPSMITH_MCP_ENABLED and a user-scoped mcp_ bearer token.
+crosswalk: []
+mcp_only:
+- tool: list_workspaces
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: resolve_workspace
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: list_applications
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_application_context
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: read_git_status
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_capabilities
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_guide
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: list_presets
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_preset
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: validate_app_spec
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: build_application
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: edit_page
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: inspect_page
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: patch_widgets
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: wire_event
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: read_semantic_page
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: read_pages
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: read_publish_status
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: read_theme
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: update_theme
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: list_changes
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_change
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: list_all_changes
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_any_change
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_change_diff
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: prepare_rollback
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: confirm_rollback
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: prepare_publish
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: confirm_publish
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_branch
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: prepare_commit
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: confirm_commit
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_page
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: rename_page
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: prepare_delete_page
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: confirm_delete_page
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: list_datasources
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_datasource
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_datasource_structure
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: list_actions
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_query
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_rest_api
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_mongo_query
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_redis_query
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_ai_query
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_s3_query
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_graphql_query
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_sheets_query
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: get_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: run_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: update_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: duplicate_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: prepare_delete_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: confirm_delete_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: prepare_run_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: confirm_run_action
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: read_js_object
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: create_js_object
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: update_js_object
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: prepare_delete_js_object
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+- tool: confirm_delete_js_object
+  reason: No published REST contract to bind to; Appsmith's OpenAPI surface is disabled by default and 401 when enabled.
+rest_only: []
+coverage:
+  mcp_tools: 61
+  rest_operations_published: 0
+  bound: 0
+  mcp_only: 61
+  rest_only: 0
+  binding_confidence: none

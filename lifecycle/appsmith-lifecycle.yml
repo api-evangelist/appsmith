@@ -1,0 +1,42 @@
+generated: '2026-09-04'
+method: searched
+source: https://status.appsmith.com + https://github.com/appsmithorg/appsmith/releases
+name: Appsmith lifecycle
+status_page:
+  url: https://status.appsmith.com
+  http_status: 200
+  platform: hosted status page
+  scope: Appsmith Cloud (app.appsmith.com); a self-hosted instance is not covered
+versioning:
+  scheme: major.minor
+  current: v2.3
+  api_path_version: v1
+  cadence: roughly every 3-6 weeks
+  source: https://github.com/appsmithorg/appsmith/releases
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: No deprecation or sunset policy is published, and no RFC 8594 Sunset/Deprecation headers were observed. The
+    server does carry a DEPRECATED_API error (AE-APP-4008, "Deprecated api", HTTP 400), so deprecation is signalled
+    at call time as a hard failure rather than announced in advance.
+  evidence: https://github.com/appsmithorg/appsmith/blob/release/app/server/appsmith-server/src/main/java/com/appsmith/server/exceptions/AppsmithErrorCode.java
+sla:
+  published: false
+  note: SLAs are named as an Enterprise-plan benefit ("Dedicated support with SLAs") on the pricing page but no SLA
+    document or uptime commitment is published.
+  source: https://www.appsmith.com/pricing
+support_windows:
+  published: false
+  note: No supported-versions / end-of-life matrix is published for self-hosted releases.
+security_advisories:
+  url: https://github.com/appsmithorg/appsmith/security/advisories
+  http_status: 200
+  note: GitHub Security Advisories; a separate appsmithorg/security-advisory repository also exists.
+evidence:
+- url: https://status.appsmith.com
+  http_status: 200
+- url: https://github.com/appsmithorg/appsmith/releases
+  http_status: 200
+- url: https://github.com/appsmithorg/appsmith/security/advisories
+  http_status: 200

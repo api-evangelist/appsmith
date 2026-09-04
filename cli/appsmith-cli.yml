@@ -1,0 +1,51 @@
+generated: '2026-09-04'
+method: searched
+source: https://docs.appsmith.com/getting-started/setup/instance-management/appsmithctl
+name: appsmithctl
+description: First-party command-line utility for managing a self-hosted Appsmith instance and its internal database.
+  It ships inside the Appsmith container — there is nothing to install separately, and there is no CLI for Appsmith
+  Cloud.
+scope: self-hosted instance administration only (not an API client)
+install:
+- method: bundled
+  note: Included in the Appsmith Docker image; no separate package, no npm/pypi/homebrew distribution.
+invocation:
+- runtime: docker-compose
+  form: docker-compose exec appsmith appsmithctl <subcommand>
+- runtime: kubernetes
+  form: kubectl exec <pod-name> -- appsmithctl <subcommand>
+commands:
+- name: --help
+  group: meta
+  description: Lists all subcommands and their options.
+- name: backup
+  group: backup-and-restore
+  description: 'Creates an encrypted backup of the instance: internal database, docker.env and Git data. Encrypted
+    with a password you supply.'
+  docs: https://docs.appsmith.com/getting-started/setup/instance-management/backup-and-restore/backup-instance
+- name: restore
+  group: backup-and-restore
+  description: Restores the instance from an encrypted backup file; prompts for the backup password.
+  docs: https://docs.appsmith.com/getting-started/setup/instance-management/backup-and-restore/restore-instance
+- name: export_db
+  group: backup-and-restore
+  description: Creates an encrypted backup of the Appsmith internal database only.
+  docs: https://docs.appsmith.com/getting-started/setup/instance-management/backup-and-restore/backup-database
+- name: import_db
+  group: backup-and-restore
+  description: Restores the Appsmith internal database from an encrypted backup file.
+  docs: https://docs.appsmith.com/getting-started/setup/instance-management/backup-and-restore/restore-database
+- name: --upload-to-s3
+  group: backup-and-restore
+  description: Uploads the backup file to a specified Amazon S3 bucket. Paid plans only.
+- name: enable-form-login
+  group: access
+  aliases:
+  - efl
+  description: Reactivates email and password sign-in for the instance — the recovery path when SSO configuration
+    locks everyone out.
+command_count: 7
+evidence:
+- url: https://docs.appsmith.com/getting-started/setup/instance-management/appsmithctl
+  http_status: 200
+  fetched: '2026-09-04'

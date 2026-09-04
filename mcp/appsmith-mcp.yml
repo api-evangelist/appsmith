@@ -1,0 +1,204 @@
+generated: '2026-09-04'
+method: searched
+source: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md
+name: Appsmith MCP server
+status: published
+maturity: beta
+deployment:
+  mode: remote
+  endpoint: https://{your-appsmith-instance}/mcp
+  auth: api-key
+  verified: searched
+  note: 'Self-hosted/templated endpoint. The server is not a separate download: it is bundled into the Appsmith Docker
+    image (deploy/docker/fs/opt/appsmith/run-mcp.sh execs /opt/appsmith/mcp/bundle/server.js), binds 127.0.0.1:8092
+    (APPSMITH_MCP_PORT) and is fronted by Caddy at the /mcp path of the instance origin. An MCP client therefore POSTs
+    to https://<your-appsmith-host>/mcp. There is NO vendor-hosted endpoint: a POST to https://app.appsmith.com/mcp
+    on 2026-09-04 was rejected by CloudFront with HTTP 403 "This distribution is not configured to allow the HTTP
+    request method that was used" — Appsmith Cloud does not expose the MCP route.'
+authentication:
+  scheme: bearer
+  token_prefix: mcp_
+  issued_from: Appsmith Profile -> MCP tokens (per-user, user-scoped)
+  note: Every tool call is bounded by the calling user's own ACL. While APPSMITH_MCP_ENABLED is off the auth filter
+    rejects mcp_ tokens with 401 and they cannot be created or rotated at all.
+  rate_limit: 5 authentication attempts per minute (bucket key mcp_authentication, RateLimitConfig.java)
+enablement:
+  default: disabled
+  note: Off by default on new deployments AND on upgrades — an existing instance never acquires an agent-facing endpoint
+    by taking an image upgrade. Each layer is a separate Admin Settings switch / env var.
+  gates:
+  - variable: APPSMITH_MCP_ENABLED
+    default: 'off'
+    effect: While off /mcp returns 404 mcp_disabled JSON and mcp_ tokens are rejected server-side (401).
+  - variable: APPSMITH_MCP_DATA_ENABLED
+    default: 'off'
+    effect: While off the datasource/query tools are unregistered; spec authoring + reads remain.
+  - variable: APPSMITH_MCP_JS_ENABLED
+    default: 'off'
+    effect: While off the restricted JS-object tools are unregistered.
+  backend_requirements: Governed and destructive tools additionally require MongoDB + Redis (APPSMITH_MONGODB_URI
+    / APPSMITH_DB_URL and APPSMITH_REDIS_URL); without them the server starts with read + spec-authoring tools only.
+session_limits:
+- variable: APPSMITH_MCP_MAX_SESSIONS
+  default: 100
+  effect: Instance-wide concurrent session cap; hard HTTP 503 when full.
+- variable: APPSMITH_MCP_MAX_SESSIONS_PER_USER
+  default: 25
+  effect: At the cap the user's own least-recently-active session is evicted rather than rejecting the new one.
+- variable: APPSMITH_MCP_SESSION_TTL_MS
+  default: 900000
+  effect: Idle session lifetime (15 min); every request refreshes the TTL.
+safety_model:
+  closed_vocabulary: Agents never author raw widget DSL, SQL, JS or {{ }} bindings — they call tools and the server
+    compiles them under the caller's own permissions.
+  prepare_confirm: Every destructive operation is a prepare_*/confirm_* pair. prepare_* returns a one-time confirmation
+    with a 5-minute TTL bound to the app, branch, message and current content revision; drift between prepare and
+    confirm fails.
+  elicitation: On clients that declare MCP elicitation support, confirm_* prompts the human directly; otherwise the
+    one-time token plus relay text is the fallback "relay posture". Bounded at 3 prompts per confirmation and 20 approval
+    prompts per session (elicitation_budget_exhausted).
+  git_branch_gate: Every mutating tool targeting a git-connected application requires a branch parameter matching
+    the current branch; the gate fails closed (git_state_unknown) when git state cannot be read.
+  agent_branch_namespace: Agent branches are confined to the reserved mcp/ prefix (max 5 per application); commits
+    are refused on any other branch (git_commit_branch_forbidden) and the server prepends a non-strippable "[mcp]
+    " marker to every commit message.
+tool_count: 61
+tools:
+- name: list_workspaces
+  category: discovery
+- name: resolve_workspace
+  category: discovery
+- name: list_applications
+  category: discovery
+- name: get_application_context
+  category: discovery
+- name: read_git_status
+  category: read
+- name: get_capabilities
+  category: discovery
+- name: get_guide
+  category: discovery
+- name: list_presets
+  category: discovery
+- name: get_preset
+  category: discovery
+- name: validate_app_spec
+  category: read
+- name: build_application
+  category: write
+- name: edit_page
+  category: write
+- name: inspect_page
+  category: read
+- name: patch_widgets
+  category: write
+- name: wire_event
+  category: write
+- name: read_semantic_page
+  category: read
+- name: read_pages
+  category: read
+- name: read_publish_status
+  category: read
+- name: read_theme
+  category: read
+- name: update_theme
+  category: write
+- name: list_changes
+  category: read
+- name: get_change
+  category: read
+- name: list_all_changes
+  category: read
+- name: get_any_change
+  category: read
+- name: get_change_diff
+  category: read
+- name: prepare_rollback
+  category: governed-write
+- name: confirm_rollback
+  category: governed-write
+- name: prepare_publish
+  category: governed-write
+- name: confirm_publish
+  category: governed-write
+- name: create_branch
+  category: git
+- name: prepare_commit
+  category: git
+- name: confirm_commit
+  category: git
+- name: create_page
+  category: write
+- name: rename_page
+  category: write
+- name: prepare_delete_page
+  category: governed-write
+- name: confirm_delete_page
+  category: governed-write
+- name: list_datasources
+  category: read
+- name: create_datasource
+  category: data
+- name: get_datasource_structure
+  category: read
+- name: list_actions
+  category: read
+- name: create_query
+  category: data
+- name: create_rest_api
+  category: data
+- name: create_mongo_query
+  category: data
+- name: create_redis_query
+  category: data
+- name: create_ai_query
+  category: data
+- name: create_s3_query
+  category: data
+- name: create_graphql_query
+  category: data
+- name: create_sheets_query
+  category: data
+- name: get_action
+  category: read
+- name: run_action
+  category: write
+- name: update_action
+  category: write
+- name: duplicate_action
+  category: write
+- name: prepare_delete_action
+  category: governed-write
+- name: confirm_delete_action
+  category: governed-write
+- name: prepare_run_action
+  category: governed-write
+- name: confirm_run_action
+  category: governed-write
+- name: read_js_object
+  category: read
+- name: create_js_object
+  category: js
+- name: update_js_object
+  category: js
+- name: prepare_delete_js_object
+  category: governed-write
+- name: confirm_delete_js_object
+  category: governed-write
+evidence:
+- url: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md
+  what: server description, deployment, gates, session limits, governance model
+- url: https://raw.githubusercontent.com/appsmithorg/appsmith/release/app/client/packages/mcp/src/app.ts
+  what: 61 server.tool() registrations; the 61 unique tool names listed here were read from this file, not inferred
+- url: https://raw.githubusercontent.com/appsmithorg/appsmith/release/app/client/packages/mcp/src/server.ts
+  what: binds 127.0.0.1:8092, APPSMITH_MCP_PORT
+- url: https://raw.githubusercontent.com/appsmithorg/appsmith/release/deploy/docker/fs/opt/appsmith/run-mcp.sh
+  what: the server ships inside the Appsmith Docker image
+- url: https://app.appsmith.com/mcp
+  http_status: 403
+  what: POST tools/list refused by CloudFront — Appsmith Cloud publishes no hosted MCP endpoint
+note: 'As of 2026-09-04 the MCP server is documented in the monorepo README only; there is no docs.appsmith.com page
+  for it (probes of /mcp, /advanced-concepts/mcp-server and /getting-started/setup/instance-configuration/mcp-server
+  all returned 404). Tool input schemas were NOT captured: a live tools/list requires an enabled instance and a user-scoped
+  mcp_ token, so schemas need authenticated introspection against a self-hosted deployment.'

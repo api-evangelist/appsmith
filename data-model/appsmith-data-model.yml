@@ -1,0 +1,143 @@
+generated: '2026-09-04'
+method: derived
+source: mcp/appsmith-mcp.yml (61 first-party MCP tool names) + live probes of https://app.appsmith.com/api/v1
+name: Appsmith data model
+note: Derived from the entity vocabulary of the first-party MCP tool surface and the live platform API, NOT from the
+  OpenAPI files in this repository. Appsmith publishes no object reference and no schema document, so no field lists
+  or id prefixes are asserted here — only the entity graph the tool names and API paths demonstrate.
+confidence: medium
+entities:
+- name: Workspace
+  description: Top-level organizational container; every application and datasource belongs to one.
+  evidence:
+  - list_workspaces
+  - resolve_workspace
+  - GET /api/v1/workspaces -> 401
+- name: Application
+  description: 'A low-code app. Branch-per-application: a git branch of an app is itself a distinct applicationId.'
+  evidence:
+  - list_applications
+  - get_application_context
+  - build_application
+  - create_branch
+- name: Page
+  description: A screen within an application; carries the widget layout.
+  evidence:
+  - create_page
+  - rename_page
+  - read_pages
+  - edit_page
+  - inspect_page
+  - confirm_delete_page
+- name: Widget
+  description: A UI element on a page. Agents never author raw widget DSL — widgets are patched through tools.
+  evidence:
+  - patch_widgets
+  - read_semantic_page
+- name: Datasource
+  description: A configured connection to a database, API or service.
+  evidence:
+  - list_datasources
+  - create_datasource
+  - get_datasource_structure
+- name: Action
+  description: A query or API call bound to a datasource; the unit that executes at runtime.
+  evidence:
+  - list_actions
+  - get_action
+  - create_query
+  - create_rest_api
+  - run_action
+  - duplicate_action
+- name: JSObject
+  description: A restricted JavaScript object holding app logic. Disabled unless APPSMITH_MCP_JS_ENABLED is on.
+  evidence:
+  - read_js_object
+  - create_js_object
+  - update_js_object
+- name: Theme
+  description: Application-level visual theme.
+  evidence:
+  - read_theme
+  - update_theme
+- name: Change
+  description: A governance change record produced by mutating operations when Mongo + Redis are configured.
+  evidence:
+  - list_changes
+  - get_change
+  - get_change_diff
+  - list_all_changes
+- name: GitState
+  description: 'Per-application git connection: current/default branch, dirty state, protected branches, remote host.'
+  evidence:
+  - read_git_status
+  - create_branch
+  - prepare_commit
+- name: Deployment
+  description: The published (viewer) copy of an application, materialized by publish.
+  evidence:
+  - read_publish_status
+  - confirm_publish
+  - confirm_rollback
+- name: User
+  description: Instance user; carries the ACL every MCP tool call is bounded by. Provisioned via SCIM 2.0 on Enterprise.
+  evidence:
+  - GET /api/v1/users/me -> 200
+  - SCIM /scim Users
+- name: Group
+  description: User group used for access control; SCIM-syncable.
+  evidence:
+  - SCIM /scim Groups
+relationships:
+- from: Workspace
+  to: Application
+  type: has_many
+  via: workspaceId
+- from: Workspace
+  to: Datasource
+  type: has_many
+  via: workspaceId
+- from: Application
+  to: Page
+  type: has_many
+  via: applicationId
+- from: Application
+  to: JSObject
+  type: has_many
+  via: applicationId
+- from: Application
+  to: Theme
+  type: has_one
+  via: applicationId
+- from: Application
+  to: GitState
+  type: has_one
+  via: applicationId
+- from: Application
+  to: Deployment
+  type: has_one
+  via: applicationId
+- from: Page
+  to: Widget
+  type: has_many
+  via: pageId
+- from: Page
+  to: Action
+  type: has_many
+  via: pageId
+- from: Action
+  to: Datasource
+  type: belongs_to
+  via: datasourceId
+- from: Change
+  to: Application
+  type: belongs_to
+  via: applicationId
+- from: User
+  to: Group
+  type: has_many
+  via: SCIM group membership
+notes:
+- 'Branch-per-application is the load-bearing quirk: Appsmith has no checkout, so create_branch returns a NEW applicationId
+  and every subsequent edit on that branch must target it.'
+- Ids observed in live responses are opaque strings; no documented id prefixes.

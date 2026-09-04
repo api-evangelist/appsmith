@@ -1,0 +1,81 @@
+generated: '2026-09-04'
+method: searched
+source: https://github.com/appsmithorg/appsmith/releases
+name: Appsmith release notes
+note: docs.appsmith.com/changelog is a 308 permanent redirect to the GitHub releases page — GitHub Releases IS the
+  published changelog, there is no separate hosted changelog. Releases are dated, tagged and carry per-release notes;
+  entries below are the recent window as of 2026-09-04.
+scheme: major.minor (v1.x -> v2.x), roughly one release every 3-6 weeks
+current_version: v2.3
+formats:
+- HTML
+- Atom (https://github.com/appsmithorg/appsmith/releases.atom)
+breaking_change_policy: Not published as a separate policy; breaking changes are called out inside individual release
+  notes.
+entries:
+- version: v2.3
+  date: '2026-08-13'
+  title: Release v2.3 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v2.3
+  prerelease: false
+- version: v2.2
+  date: '2026-07-09'
+  title: Release v2.2 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v2.2
+  prerelease: false
+- version: v2.1
+  date: '2026-05-29'
+  title: Release v2.1 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v2.1
+  prerelease: false
+- version: v2.0
+  date: '2026-05-21'
+  title: Release v2.0 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v2.0
+  prerelease: false
+- version: v1.99
+  date: '2026-04-16'
+  title: Release v1.99 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.99
+  prerelease: false
+- version: v1.98
+  date: '2026-03-23'
+  title: Release v1.98 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.98
+  prerelease: false
+- version: v1.97
+  date: '2026-03-05'
+  title: Release v1.97 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.97
+  prerelease: false
+- version: v1.96
+  date: '2026-02-19'
+  title: Release v1.96 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.96
+  prerelease: false
+- version: v1.95
+  date: '2026-01-22'
+  title: Release v1.95 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.95
+  prerelease: false
+- version: v1.94
+  date: '2025-12-18'
+  title: Release v1.94 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.94
+  prerelease: false
+- version: v1.93
+  date: '2025-12-04'
+  title: Release v1.93 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.93
+  prerelease: false
+- version: v1.92
+  date: '2025-11-20'
+  title: Release v1.92 🌈
+  url: https://github.com/appsmithorg/appsmith/releases/tag/v1.92
+  prerelease: false
+evidence:
+- url: https://docs.appsmith.com/changelog
+  http_status: 308
+  what: redirects to github.com/appsmithorg/appsmith/releases
+- url: https://github.com/appsmithorg/appsmith/releases
+  http_status: 200

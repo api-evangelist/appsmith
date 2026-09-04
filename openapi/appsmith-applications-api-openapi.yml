@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Appsmith Applications API
   description: API for the Appsmith open source low-code platform, enabling programmatic management of applications, workspaces, datasources, pages, and widgets for building internal tools and workflow applications.

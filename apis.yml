@@ -1,7 +1,13 @@
 aid: appsmith
 name: Appsmith
 description: >-
-  Appsmith is an open source low-code platform for building internal tools and workflow applications.
+  Appsmith is an open source (Apache-2.0) low-code platform for building internal tools, admin panels and
+  workflow applications on top of 25+ databases and any REST or GraphQL API. It runs self-hosted via Docker,
+  Kubernetes or Helm, or as Appsmith Cloud. Its agent surface is a first-party Model Context Protocol server
+  bundled into the Appsmith image and fronted at /mcp, exposing 61 tools that build and edit applications
+  under the calling user's own permissions; it ships disabled by default and requires a per-user mcp_ token.
+  Appsmith publishes no public REST API reference: the platform API at /api/v1 is undocumented editor traffic
+  and its springdoc OpenAPI surface is disabled by default and authenticated when enabled.
 type: Index
 deliveryModel:
   model: self-hosted
@@ -46,13 +52,14 @@ tags_raw:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/appsmith/refs/heads/main/apis.yml
 created: 2026-03-27
-modified: '2026-04-19'
+modified: '2026-09-04'
 specificationVersion: '0.23'
 apis:
 - aid: appsmith:appsmith-applications-api
   name: Appsmith Applications API
   description: Low-code application management
   humanURL: https://docs.appsmith.com
+  baseURL: https://app.appsmith.com/api/v1
   tags:
   - Application
   tags_raw:
@@ -82,6 +89,7 @@ apis:
   name: Appsmith Datasources API
   description: Connected datasource management
   humanURL: https://docs.appsmith.com
+  baseURL: https://app.appsmith.com/api/v1
   tags:
   - Data Sources
   tags_raw:
@@ -111,6 +119,7 @@ apis:
   name: Appsmith Workspaces API
   description: Workspace organization and management
   humanURL: https://docs.appsmith.com
+  baseURL: https://app.appsmith.com/api/v1
   tags:
   - Workspaces
   properties:
@@ -162,6 +171,67 @@ common:
     url: https://www.appsmith.com
   - type: Documentation
     url: https://docs.appsmith.com
+  - type: MCPServer
+    url: mcp/appsmith-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/appsmith-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: ErrorCatalog
+    url: errors/appsmith-error-codes.yml
+  - type: Conventions
+    url: conventions/appsmith-conventions.yml
+  - type: DataModel
+    url: data-model/appsmith-data-model.yml
+  - type: Conformance
+    url: conformance/appsmith-conformance.yml
+  - type: Compliance
+    url: https://security.appsmith.com/
+  - type: VulnerabilityDisclosure
+    url: security/appsmith-vulnerability-disclosure.yml
+  - type: Lifecycle
+    url: lifecycle/appsmith-lifecycle.yml
+  - type: StatusPage
+    url: https://status.appsmith.com
+  - type: ChangeLog
+    url: changelog/appsmith-changelog.yml
+  - type: CLI
+    url: cli/appsmith-cli.yml
+  - type: Components
+    url: components/appsmith-components.yml
+  - type: Packages
+    url: packages/appsmith-packages.yml
+  - type: RateLimits
+    url: rate-limits/appsmith-rate-limits.yml
+  - type: Plans
+    url: plans/appsmith-plans-pricing.yml
+  - type: FinOps
+    url: finops/appsmith-finops.yml
+  - type: Integrations
+    url: integrations/_index.yml
+  - type: LLMsTxt
+    url: llms/appsmith-llms.txt
+  - type: GitHubOrganization
+    url: https://github.com/appsmithorg
+  - type: GettingStarted
+    url: https://docs.appsmith.com/getting-started
+  - type: Support
+    url: https://community.appsmith.com
+  - type: Blog
+    url: https://www.appsmith.com/blog
+  - type: Pricing
+    url: https://www.appsmith.com/pricing
+  - type: SignUp
+    url: https://app.appsmith.com/user/signup
+  - type: TermsOfService
+    url: https://www.appsmith.com/terms-and-conditions
+  - type: PrivacyPolicy
+    url: https://www.appsmith.com/privacy-policy
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v3

@@ -1,13 +1,64 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/appsmith-openapi.yaml
+generated: '2026-09-04'
+method: searched
+source: https://docs.appsmith.com + appsmithorg/appsmith source + live probes of https://app.appsmith.com/api/v1
+name: Appsmith authentication
+note: 'Upgraded from a derived profile that read a single bearerAuth scheme out of the scaffold OpenAPI in this repository.
+  Appsmith has no general-purpose REST API key: there are three distinct credential kinds, each scoped to a different
+  surface.'
 summary:
   types:
-  - http
+  - cookie
+  - http-bearer
+  - apiKey
+  public_api_key: false
 schemes:
-- name: bearerAuth
+- name: editorSession
+  type: cookie
+  in: cookie
+  surface: https://app.appsmith.com/api/v1
+  description: Session cookie established by the browser sign-in flow (form login, Google SSO on Free, SAML/OIDC on
+    Enterprise). This is what the /api/v1 platform API actually authenticates. Unauthenticated calls return the anonymousUser
+    identity (GET /api/v1/users/me -> 200 with "email":"anonymousUser") or 401.
+  documented_as_public_api: false
+  evidence: https://app.appsmith.com/api/v1/users/me (HTTP 200, 2026-09-04)
+- name: mcpToken
   type: http
   scheme: bearer
-  bearerFormat: JWT
-  sources:
-  - openapi/appsmith-openapi.yaml
+  prefix: mcp_
+  surface: https://{your-appsmith-instance}/mcp
+  description: Per-user MCP bearer token created at Profile -> MCP tokens. Every tool call it authorizes stays bounded
+    by that user's own ACL. Rejected with 401 and non-creatable while APPSMITH_MCP_ENABLED is off; authentication
+    attempts are throttled to 5 per minute.
+  source: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md
+- name: scimApiKey
+  type: apiKey
+  in: header
+  header: Authorization
+  surface: https://{your-domain}/scim
+  description: API key generated in the Appsmith admin UI ("API key to setup SCIM") and configured in the identity
+    provider for SCIM 2.0 user and group provisioning. Enterprise plan.
+  source: https://docs.appsmith.com/advanced-concepts/user-provisioning-group-sync
+instance_sso:
+  free:
+  - Google SSO
+  enterprise:
+  - SAML 2.0
+  - OIDC
+  source: https://www.appsmith.com/pricing
+  recovery: appsmithctl enable-form-login re-enables email/password sign-in if SSO configuration locks an instance
+    out.
+datasource_auth:
+  note: 'Distinct from platform auth: Appsmith CONSUMES auth on behalf of apps — Authenticated API datasources support
+    API keys, bearer tokens, basic auth and OAuth 2.0, with credentials stored server-side rather than in the app
+    definition.'
+  source: https://docs.appsmith.com/connect-data/reference/authenticated-api
+oauth_scopes:
+  published: false
+  note: Appsmith is an OAuth relying party, not an authorization server; there is no scope surface to document.
+evidence:
+- url: https://app.appsmith.com/api/v1/users/me
+  http_status: 200
+- url: https://app.appsmith.com/api/v1/workspaces
+  http_status: 401
+- url: https://docs.appsmith.com/advanced-concepts/user-provisioning-group-sync
+  http_status: 200

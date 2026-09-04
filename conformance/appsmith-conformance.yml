@@ -1,0 +1,78 @@
+generated: '2026-09-04'
+method: searched
+source: https://docs.appsmith.com + https://security.appsmith.com + appsmithorg/appsmith source
+name: Appsmith conformance
+entries:
+- id: scim2
+  name: SCIM 2.0 (RFC 7643/7644)
+  conforms: true
+  domain_standard: true
+  evidence: https://docs.appsmith.com/advanced-concepts/user-provisioning-group-sync
+  note: 'Appsmith exposes a SCIM 2.0 provisioning endpoint at https://<your-domain>/scim, authenticated with an API
+    key in the Authorization header, covering Users and Groups. The docs state plainly: "Appsmith only supports SCIM
+    v2.0 for user and group provisioning." Enterprise plan; verified against Okta and Microsoft Entra ID. This is
+    the domain-standard signature for this market — an identity team that already speaks SCIM provisions Appsmith
+    with no bespoke connector.'
+  scope: Enterprise plan
+- id: saml2
+  name: SAML 2.0 SSO
+  conforms: true
+  evidence: https://www.appsmith.com/pricing
+  scope: Enterprise plan
+  note: Listed as SAML/OIDC SSO on the pricing page; Google SSO is available on the Free plan.
+- id: oidc
+  name: OpenID Connect
+  conforms: true
+  evidence: https://www.appsmith.com/pricing
+  scope: Enterprise plan
+  note: OIDC SSO for instance login. Appsmith does not itself publish an /.well-known/openid-configuration — it is
+    an OIDC relying party, not a provider (all four hosts 404 or returned an SPA shell on 2026-09-04).
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: https://docs.appsmith.com/connect-data/reference/authenticated-api
+  note: 'Consumed, not exposed: OAuth 2.0 is a supported authentication type for Authenticated API datasources. Appsmith
+    publishes no OAuth authorization server of its own and no scope surface.'
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md
+  note: First-party MCP server bundled in the Appsmith image, including the elicitation capability for human approval
+    of destructive tools. Off by default. See mcp/appsmith-mcp.yml.
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: https://app.appsmith.com/api/v1/applications/home
+  note: Errors use a proprietary responseMeta envelope with AE-<AREA>-<NNNN> codes, not application/problem+json.
+- id: rfc8594
+  name: RFC 8594 Sunset header
+  conforms: false
+  evidence: lifecycle/appsmith-lifecycle.yml
+  note: No Sunset or Deprecation headers observed and no deprecation policy published.
+- id: soc2
+  name: SOC 2
+  conforms: true
+  evidence: https://security.appsmith.com/
+  note: SOC 2 report and a penetration-test report are offered through the trust center under NDA. The trust center
+    itself states "We are working on our security compliance" — no ISO 27001, HIPAA, PCI or FedRAMP is claimed.
+- id: rate-limit-headers
+  name: IETF RateLimit header fields
+  conforms: false
+  evidence: rate-limits/appsmith-rate-limits.yml
+  note: 429 responses carry no RateLimit-* or Retry-After headers.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: https://app.appsmith.com/api/v3/docs
+  note: A springdoc surface exists in the server but application-ce.properties ships it disabled (springdoc.api-docs.enabled=false,
+    springdoc.swagger-ui.enabled=false) and OpenApiDocsAuthTest.java asserts /v3/docs and /v3/swagger-ui.html must
+    return 401 unauthenticated (GHSA-v6jh-fx3m-7xhw). A live probe returned 401. No OpenAPI document is published
+    to the public.
+evidence_probes:
+- url: https://docs.appsmith.com/advanced-concepts/user-provisioning-group-sync
+  status: 200
+- url: https://security.appsmith.com/
+  status: 200
+  note: 403 to a plain curl (bot challenge); 200 and readable to a browser-shaped fetch.
+- url: https://app.appsmith.com/api/v3/docs
+  status: 401

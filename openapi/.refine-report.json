@@ -13,6 +13,11 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "appsmith-applications-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "appsmith-datasources-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "appsmith-workspaces-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

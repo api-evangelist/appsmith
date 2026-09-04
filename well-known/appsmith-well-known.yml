@@ -1,0 +1,137 @@
+generated: '2026-09-04'
+method: probed
+source: live probes 2026-09-04
+name: Appsmith .well-known probe
+note: Appsmith serves NO .well-known documents. Every path on every host either 404s or, on app.appsmith.com, returns
+  HTTP 200 carrying the single-page-app HTML shell — the classic SPA catch-all false positive. No WellKnown, SecurityTxt
+  or AgentCard pointer is emitted, because a recorded absence is not a presence. Note that Appsmith DOES publish a
+  vulnerability-reporting policy, just not at /.well-known/security.txt — see security/appsmith-vulnerability-disclosure.yml.
+documents_found: 0
+hosts:
+- host: www.appsmith.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    note: Next.js 404 page
+- host: appsmith.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    note: Next.js 404 page
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    note: Next.js 404 page
+- host: docs.appsmith.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: Docusaurus 404 page
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    note: Docusaurus 404 page
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    note: Docusaurus 404 page
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    note: Docusaurus 404 page
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    note: Docusaurus 404 page
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    note: Docusaurus 404 page
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    note: Docusaurus 404 page
+- host: app.appsmith.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    note: 'SPA catch-all: returns the Appsmith editor HTML shell with HTTP 200 for EVERY /.well-known/* path. Not
+      a document — recorded as a miss.'
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    note: 'SPA catch-all: returns the Appsmith editor HTML shell with HTTP 200 for EVERY /.well-known/* path. Not
+      a document — recorded as a miss.'
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: null
+    note: 'SPA catch-all: returns the Appsmith editor HTML shell with HTTP 200 for EVERY /.well-known/* path. Not
+      a document — recorded as a miss.'
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    note: 'SPA catch-all: returns the Appsmith editor HTML shell with HTTP 200 for EVERY /.well-known/* path. Not
+      a document — recorded as a miss.'
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    note: 'SPA catch-all: returns the Appsmith editor HTML shell with HTTP 200 for EVERY /.well-known/* path. Not
+      a document — recorded as a miss.'
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    note: 'SPA catch-all: returns the Appsmith editor HTML shell with HTTP 200 for EVERY /.well-known/* path. Not
+      a document — recorded as a miss.'
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    note: 'SPA catch-all: returns the Appsmith editor HTML shell with HTTP 200 for EVERY /.well-known/* path. Not
+      a document — recorded as a miss.'

@@ -1,0 +1,64 @@
+generated: '2026-09-04'
+method: searched
+source: https://registry.npmjs.org + https://pypi.org + https://github.com/appsmithorg
+name: Appsmith packages
+note: Appsmith publishes NO official API client SDK in any language. The platform API is undocumented editor traffic,
+  so there is nothing for an SDK to wrap. The two first-party npm packages below are the editor design system, not
+  API clients. The bare name "appsmith" on npm is an npm security holding package, not an Appsmith release — do not
+  treat it as a first-party SDK.
+official_sdk_count: 0
+packages:
+- name: '@appsmithorg/design-system'
+  registry: npm
+  official: true
+  kind: ui-component-library
+  version: 2.1.43
+  published: '2024-07-05'
+  url: https://www.npmjs.com/package/@appsmithorg/design-system
+  publisher: appsmithinc
+  description: The package for the design system that powers the Appsmith platform.
+  note: 'First-party but stale: last publish 2024-07-05, over two years before the current v2.3 platform release (2026-08-13).
+    Not an API client.'
+- name: '@appsmith/ads'
+  registry: npm
+  official: true
+  kind: ui-component-library
+  version: 2.1.44-alpha.18
+  published: '2025-02-19'
+  url: https://www.npmjs.com/package/@appsmith/ads
+  publisher: albinab
+  description: Successor scope for the Appsmith design system.
+  note: Latest published release is an alpha; no stable release on this scope. Not an API client.
+- name: '@appsmithorg/design-system-old'
+  registry: npm
+  official: true
+  kind: ui-component-library
+  version: 1.1.17
+  published: '2024-05-08'
+  url: https://www.npmjs.com/package/@appsmithorg/design-system-old
+  publisher: appsmithinc
+  description: Superseded design-system scope, retained for compatibility.
+- name: appsmith
+  registry: npm
+  official: false
+  kind: security-holding-placeholder
+  version: 0.0.1-security.1
+  published: '2026-04-09'
+  url: https://www.npmjs.com/package/appsmith
+  description: npm "security holding package" occupying the bare name. NOT published by Appsmith and contains no code.
+distribution:
+  primary: Docker image (self-hosted), Helm chart, and Appsmith Cloud — the product is distributed as a deployment,
+    not as a library.
+  docker: https://hub.docker.com/r/appsmith/appsmith-ce
+  note: The MCP server and the appsmithctl CLI both ship inside that image rather than as installable packages.
+searched_registries:
+- npm
+- PyPI
+- pkg.go.dev (no module)
+- RubyGems (none)
+- Maven Central (server artifacts are not published as client libraries)
+evidence:
+- url: https://registry.npmjs.org/-/v1/search?text=appsmithorg
+  http_status: 200
+- url: https://pypi.org/pypi/appsmith/json
+  http_status: 404

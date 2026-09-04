@@ -1,0 +1,20 @@
+generated: '2026-09-04'
+method: generated
+source: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md + https://raw.githubusercontent.com/appsmithorg/appsmith/release/app/client/packages/mcp/src/app.ts
+name: Appsmith agent skills
+note: Grounded in the 61 MCP tool names read from server.tool() registrations in the first-party source, not in the
+  OpenAPI files in this repository (those are a scaffold that does not match the live API). Appsmith publishes no
+  skills/ or AGENTS.md of its own.
+skills:
+- name: appsmith-build-internal-tool
+  file: skills/appsmith-build-internal-tool.md
+  description: Build a working Appsmith internal tool from a brief — workspace, application, datasource-backed query,
+    page layout, shareable link.
+  surface: mcp
+  operations: 14
+- name: appsmith-governed-change
+  file: skills/appsmith-governed-change.md
+  description: Make a reviewable, reversible change to an existing application — read state, edit on a reserved mcp/
+    branch, obtain explicit human approval, and know what can and cannot be taken back.
+  surface: mcp
+  operations: 17

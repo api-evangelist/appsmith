@@ -1,0 +1,95 @@
+generated: '2026-09-04'
+method: searched
+source: https://app.appsmith.com/api/v1/ (live probes) + appsmithorg/appsmith source + https://docs.appsmith.com
+name: Appsmith API conventions
+note: Derived from live probes of the running platform API and from the Apache-2.0 server source, NOT from the OpenAPI
+  files in this repository (those are an API Evangelist scaffold whose operations do not match the live API).
+auth:
+  style: session cookie for the platform API; bearer mcp_ token for MCP; API key header for SCIM
+  note: 'Appsmith publishes no general-purpose REST API key. The three credential kinds are: the editor session cookie
+    (browser), a per-user mcp_ bearer token created at Profile -> MCP tokens, and a SCIM provisioning API key sent
+    in the Authorization header.'
+  see: authentication/appsmith-authentication.yml
+base_url:
+  value: https://app.appsmith.com/api/v1
+  self_hosted: https://{your-appsmith-instance}/api/v1
+  verified: probed 2026-09-04
+envelope:
+  success: '{"responseMeta":{"status":200,"success":true},"data":{...}}'
+  error: '{"responseMeta":{"status":400,"success":false,"error":{"code":"AE-APP-4000","title":"ARGUMENT_ERROR","message":"..."}},"errorDisplay":""}'
+  note: Every response — success and failure — is wrapped in responseMeta. The HTTP status is repeated inside the
+    body.
+  see: errors/appsmith-error-codes.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  note: No replay protection exists. A code search of appsmithorg/appsmith for "Idempotency-Key" returns zero hits,
+    no docs page describes a retry-safe write, and no probed response carried an idempotency header. The nearest thing
+    is the MCP prepare_*/confirm_* handshake, which is a one-time HUMAN-APPROVAL token bound to a content revision
+    — it prevents an unapproved write, not a duplicated one, and it does not apply to the REST surface.
+  evidence: https://github.com/search?q=repo%3Aappsmithorg%2Fappsmith+%22Idempotency-Key%22 -> 0 results (2026-09-04)
+reversibility:
+  grade: documented
+  note: Reversal paths exist and are named, but no published window states how long any of them stays available.
+  surfaces:
+  - write: MCP publish (confirm_publish)
+    reversal: prepare_rollback / confirm_rollback
+    window: null
+    window_note: No retention window published for how far back a rollback can reach.
+    source: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md
+  - write: MCP destructive tools (delete page / action / JS object, run action, commit)
+    reversal: None — the prepare_*/confirm_* handshake is preventive, not reversible
+    window: 5 minutes
+    window_note: The 5-minute TTL is the life of the one-time CONFIRMATION token, i.e. how long you have to approve
+      — it is not an undo window.
+    source: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md
+  - write: Application / instance state
+    reversal: appsmithctl restore / import_db from an encrypted backup
+    window: null
+    window_note: Operator-controlled; retention depends entirely on the operator's own backup schedule.
+    source: https://docs.appsmith.com/getting-started/setup/instance-management/appsmithctl
+  - write: Git-connected application edits
+    reversal: Discard/revert through Appsmith's branch UI or the git remote; MCP commits are confined to mcp/ branches
+      and are never merged by the agent
+    window: null
+    source: https://github.com/appsmithorg/appsmith/blob/release/app/client/packages/mcp/README.md
+dry_run_mode:
+  supported: true
+  mechanism: validate_app_spec (MCP) validates an application spec without building it; prepare_* tools return what
+    the operation would do before any change is committed.
+  note: MCP surface only; no dry-run on the REST surface.
+pagination:
+  style: null
+  note: No pagination convention is published. The platform API returns full collections scoped by workspaceId; no
+    page/cursor/limit parameters are documented.
+versioning:
+  style: URI path
+  current: v1
+  note: The platform API has been /api/v1 across every release; product versions (v1.x, v2.x) version the application,
+    not the API path.
+  see: lifecycle/appsmith-lifecycle.yml
+request_id:
+  header: null
+  note: No request-id / trace header is documented on responses.
+rate_limit_signaling:
+  headers: null
+  status: 429
+  code: AE-TMR-4029
+  see: rate-limits/appsmith-rate-limits.yml
+  note: No RateLimit-* or Retry-After headers — the only runtime signal is the 429 plus the AE-TMR-4029 body code.
+field_expansion:
+  supported: false
+  note: Not documented.
+evidence:
+- url: https://app.appsmith.com/api/v1/users/me
+  http_status: 200
+  what: responseMeta success envelope, anonymousUser body
+- url: https://app.appsmith.com/api/v1/applications/home
+  http_status: 400
+  what: responseMeta error envelope with AE-APP-4000
+- url: https://app.appsmith.com/api/v1/applications
+  http_status: 405
+  what: 405 METHOD_NOT_ALLOWED — the scaffold spec operation listApplications does not exist
+- url: https://app.appsmith.com/api/v3/docs
+  http_status: 401
+  what: springdoc surface is auth-gated

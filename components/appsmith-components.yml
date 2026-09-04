@@ -1,0 +1,46 @@
+generated: '2026-09-04'
+method: searched
+source: https://docs.appsmith.com/advanced-concepts/embed-appsmith-into-existing-application
+name: Appsmith embeddable and client-side components
+note: Appsmith ships no JavaScript embed SDK. Embedding is done with a plain HTML iframe pointed at an app-specific
+  Embed URL, with cross-origin control handled through window.postMessage. The one first-party npm distribution is
+  the design system that powers the Appsmith editor itself, not an embedding library.
+families:
+- name: Application embedding
+  kind: hosted surface
+  loader: HTML <iframe>
+  description: Every Appsmith application exposes an Embed URL under App Settings -> Share & Embed. Setting it as
+    an iframe src renders the app inside a host page. Private app embedding with shared logins is an Enterprise-plan
+    feature.
+  docs: https://docs.appsmith.com/advanced-concepts/embed-appsmith-into-existing-application
+- name: Embedded-app messaging
+  kind: browser API
+  loader: window.postMessage
+  description: Two-way messaging between the host page and the embedded Appsmith app.
+  docs: https://docs.appsmith.com/build-apps/how-to-guides/send-messages-between-your-app-and-appsmith
+- name: Iframe widget
+  kind: in-app widget
+  loader: Appsmith widget
+  description: The reverse direction — embeds a third-party page or app INSIDE an Appsmith application, with postMessage
+    communication. Hardened against XSS from v1.8.6.
+  docs: https://docs.appsmith.com/reference/widgets/iframe
+- name: Custom widget
+  kind: in-app widget
+  loader: Appsmith widget
+  description: Author an HTML/CSS/JS component inside an Appsmith app when no built-in widget fits.
+  docs: https://docs.appsmith.com/reference/widgets
+- name: Appsmith Design System
+  kind: component library
+  loader: npm
+  package: '@appsmithorg/design-system'
+  registry: npm
+  version: 2.1.43
+  published: '2024-07-05'
+  description: The React component library that powers the Appsmith platform UI. Published first-party by npm user
+    appsmithinc; consumable but not documented as a public integration surface, and unreleased for over two years.
+  url: https://www.npmjs.com/package/@appsmithorg/design-system
+evidence:
+- url: https://docs.appsmith.com/advanced-concepts/embed-appsmith-into-existing-application
+  http_status: 200
+- url: https://registry.npmjs.org/@appsmithorg/design-system
+  http_status: 200

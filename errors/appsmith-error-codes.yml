@@ -1,0 +1,851 @@
+generated: '2026-09-04'
+method: searched
+source: https://github.com/appsmithorg/appsmith/blob/release/app/server/appsmith-server/src/main/java/com/appsmith/server/exceptions/AppsmithError.java
+name: Appsmith platform error catalog
+note: 'Harvested verbatim from the two first-party enum sources in appsmithorg/appsmith (Apache-2.0): AppsmithErrorCode.java
+  carries the AE-<AREA>-<NNNN> code + short title, AppsmithError.java binds each code to its HTTP status, message
+  template and ErrorType. Cross-checked live: GET https://app.appsmith.com/api/v1/applications/home returned HTTP
+  400 with {"responseMeta":{"status":400,"success":false,"error":{"code":"AE-APP-4000","title":"ARGUMENT_ERROR",...}}}
+  on 2026-09-04, confirming the codes are the ones the running API emits.'
+format: appsmith-response-meta
+rfc9457: false
+envelope:
+  shape: responseMeta
+  example_observed: '{"responseMeta":{"status":400,"success":false,"error":{"code":"AE-APP-4000","title":"ARGUMENT_ERROR","message":"Please
+    enter a valid parameter workspaceId."}},"errorDisplay":""}'
+  fields:
+  - field: responseMeta.status
+    description: HTTP status repeated inside the body
+  - field: responseMeta.success
+    description: Boolean success flag; false on every error
+  - field: responseMeta.error.code
+    description: Stable AE-<AREA>-<NNNN> error code
+  - field: responseMeta.error.title
+    description: ErrorType class, e.g. ARGUMENT_ERROR
+  - field: responseMeta.error.message
+    description: Human-readable message, parameters interpolated into {0}/{1} placeholders
+  - field: errorDisplay
+    description: Client-facing display string, often empty
+  evidence:
+    url: https://app.appsmith.com/api/v1/applications/home
+    http_status: 400
+    fetched: '2026-09-04'
+code_scheme:
+  pattern: AE-<AREA>-<HTTP-ish NNNN>
+  description: AE = Appsmith Error; the AREA segment names the subsystem (APP, ACL, GIT, DTS/datasource, TMR/too-many-requests,
+    PLG/plugin, EMV/email verification, USR, etc.); the numeric segment usually begins with the HTTP status family.
+counts:
+  codes: 126
+  by_status:
+    '200': 1
+    '400': 58
+    '401': 4
+    '402': 1
+    '403': 8
+    '404': 8
+    '406': 2
+    '408': 1
+    '409': 6
+    '413': 1
+    '429': 2
+    '498': 1
+    '500': 28
+    '503': 2
+    '504': 3
+  by_type:
+    ARGUMENT_ERROR: 13
+    ARTIFACT_IMPORT_ERROR: 1
+    AUTHENTICATION_ERROR: 6
+    BAD_REQUEST: 24
+    CONFIGURATION_ERROR: 7
+    CONNECTIVITY_ERROR: 4
+    DATASOURCE_CONFIGURATION_ERROR: 3
+    EE_FEATURE_ERROR: 1
+    GIT_ACTION_EXECUTION_ERROR: 7
+    GIT_CONFIGURATION_ERROR: 13
+    GIT_UPSTREAM_CHANGES_PUSH_EXECUTION_ERROR: 1
+    INTERNAL_ERROR: 45
+    REPOSITORY_NOT_FOUND: 1
+problem_types:
+- code: AE-ACC-4038
+  name: INVALID_ACTION_COLLECTION
+  status: 400
+  title: Collection configuration is invalid
+  detail_template: '{0} is not correctly configured. Please fix the following and then re-run: \n{1}'
+  type: CONFIGURATION_ERROR
+- code: AE-ACL-4003
+  name: UNAUTHORIZED_ACCESS
+  status: 403
+  title: Unauthorized access
+  detail_template: Unauthorized access
+  type: AUTHENTICATION_ERROR
+- code: AE-ACL-4004
+  name: ACL_NO_RESOURCE_FOUND
+  status: 404
+  title: No resource found or permission denied
+  detail_template: Unable to find {0} {1}. Either the asset doesn''t exist or you don''t have required permissions
+  type: INTERNAL_ERROR
+- code: AE-ACL-4005
+  name: APPLICATION_NOT_CLONED_MISSING_PERMISSIONS
+  status: 403
+  title: Cloning application failed
+  detail_template: 'Unable to clone application. You don''''t have required permissions for {0}: {1}'
+  type: INTERNAL_ERROR
+- code: AE-ACL-4006
+  name: APPLICATION_NOT_FORKED_MISSING_PERMISSIONS
+  status: 403
+  title: Forking application failed
+  detail_template: 'Unable to fork application. You don''''t have required permissions for {0}: {1}'
+  type: INTERNAL_ERROR
+- code: AE-ACL-4007
+  name: UNABLE_TO_DEPLOY_MISSING_PERMISSION
+  status: 403
+  title: Unable to deploy
+  detail_template: 'Unable to deploy the Application. You don''''t have required permissions for {0}: {1}'
+  type: INTERNAL_ERROR
+- code: AE-APP-4000
+  name: INVALID_PARAMETER
+  status: 400
+  title: Invalid parameter
+  detail_template: Please enter a valid parameter {0}.
+  type: ARGUMENT_ERROR
+- code: AE-APP-4004
+  name: PAGE_ID_NOT_GIVEN
+  status: 400
+  title: Missing page id
+  detail_template: Missing page id. Please enter one.
+  type: ARGUMENT_ERROR
+- code: AE-APP-4005
+  name: DUPLICATE_KEY_USER_ERROR
+  status: 400
+  title: Name already used
+  detail_template: '{0} already exists. Please use a different {1}'
+  type: BAD_REQUEST
+- code: AE-APP-4007
+  name: UNSUPPORTED_OPERATION
+  status: 400
+  title: Unsupported operation
+  detail_template: Unsupported operation
+  type: BAD_REQUEST
+- code: AE-APP-4008
+  name: DEPRECATED_API
+  status: 400
+  title: Deprecated API
+  detail_template: This API has been deprecated, please contact the Appsmith support for more details.
+  type: BAD_REQUEST
+- code: AE-APP-4011
+  name: USER_NOT_ASSIGNED_TO_ROLE
+  status: 400
+  title: User has not been assigned to this role
+  detail_template: User {0} has not been assigned role {1}
+  type: ARGUMENT_ERROR
+- code: AE-APP-4012
+  name: INVALID_ACTION
+  status: 400
+  title: Action configuration is invalid
+  detail_template: '{0} is not correctly configured. Please fix the following and then re-run: \n{1}'
+  type: CONFIGURATION_ERROR
+- code: AE-APP-4013
+  name: PAYLOAD_TOO_LARGE
+  status: 413
+  title: Payload exceeds max allowed size
+  detail_template: The request payload is too large. Max allowed size for request payload is {0} KB
+  type: CONNECTIVITY_ERROR
+- code: AE-APP-4016
+  name: NO_CONFIGURATION_FOUND_IN_ACTION
+  status: 400
+  title: No configurations found in this action
+  detail_template: No configurations found in this action
+  type: CONFIGURATION_ERROR
+- code: AE-APP-4018
+  name: PAGE_DOESNT_BELONG_TO_APPLICATION
+  status: 400
+  title: Page doesn''t belong to this application
+  detail_template: Unexpected state. Page {0} does not seem belong to the application {1}. Please reach out to Appsmith
+    customer support to resolve this.
+  type: BAD_REQUEST
+- code: AE-APP-4019
+  name: UNAUTHORIZED_DOMAIN
+  status: 401
+  title: Invalid or unauthorized email domain
+  detail_template: Invalid email domain {0} used for sign in/sign up. Please contact the administrator to configure
+    this domain if this is unexpected.
+  type: AUTHENTICATION_ERROR
+- code: AE-APP-4020
+  name: USER_NOT_SIGNED_IN
+  status: 401
+  title: User not signed in
+  detail_template: You are not logged in. Please sign in with the registered email ID or sign up
+  type: AUTHENTICATION_ERROR
+- code: AE-APP-4021
+  name: USER_ALREADY_EXISTS_IN_WORKSPACE
+  status: 400
+  title: User already exists in this workspace
+  detail_template: The user {0} has already been added to the workspace with role {1}. To change the role, please
+    navigate to `Manage users` page.
+  type: BAD_REQUEST
+- code: AE-APP-4023
+  name: INVALID_CREDENTIALS
+  status: 200
+  title: Invalid credentials
+  detail_template: Invalid credentials provided. Did you input the credentials correctly?
+  type: AUTHENTICATION_ERROR
+- code: AE-APP-4025
+  name: USER_ALREADY_EXISTS_SIGNUP
+  status: 409
+  title: Account already exists with this email
+  detail_template: There is already an account registered with this email {0}. Please sign in instead.
+  type: BAD_REQUEST
+- code: AE-APP-4026
+  name: ACTION_IS_NOT_AUTHORIZED
+  status: 403
+  title: Permission denied
+  detail_template: 'Uh oh! You do not have permissions to do : {0}'
+  type: AUTHENTICATION_ERROR
+- code: AE-APP-4027
+  name: NO_RESOURCE_FOUND
+  status: 404
+  title: No resource found
+  detail_template: Unable to find {0} {1}
+  type: INTERNAL_ERROR
+- code: AE-APP-4028
+  name: VALIDATION_FAILURE
+  status: 400
+  title: Validation failed
+  detail_template: 'Validation Failure(s): {0}'
+  type: INTERNAL_ERROR
+- code: AE-APP-4031
+  name: WORKSPACE_ID_NOT_GIVEN
+  status: 400
+  title: Missing workspace id
+  detail_template: Missing workspace id. Please enter one.
+  type: ARGUMENT_ERROR
+- code: AE-APP-4038
+  name: REMOVE_LAST_WORKSPACE_ADMIN_ERROR
+  status: 400
+  title: Last admin cannot be removed
+  detail_template: The last admin cannot be removed from the workspace
+  type: INTERNAL_ERROR
+- code: AE-APP-4040
+  name: UNSUPPORTED_IMPORT_OPERATION_FOR_GIT_CONNECTED_APPLICATION
+  status: 400
+  title: Unsupported operation
+  detail_template: Import application via file is not supported for git connected application. Please use Git Pull
+    to update and sync your application.
+  type: BAD_REQUEST
+- code: AE-APP-4052
+  name: UNKNOWN_PLUGIN_REFERENCE
+  status: 400
+  title: Unknown plugin
+  detail_template: Unable to find the plugin {0}. Please reach out to Appsmith customer support to resolve this.
+  type: CONFIGURATION_ERROR
+- code: AE-APP-4053
+  name: INVALID_LICENSE_KEY_ENTERED
+  status: 400
+  title: Invalid license key
+  detail_template: The license key entered is invalid. Please try again.
+  type: ARGUMENT_ERROR
+- code: AE-APP-4080
+  name: HEALTHCHECK_TIMEOUT
+  status: 408
+  title: Connection timeout during health check
+  detail_template: '{0} connection timed out.'
+  type: CONNECTIVITY_ERROR
+- code: AE-APP-4091
+  name: DUPLICATE_KEY
+  status: 409
+  title: Duplicate key
+  detail_template: 'Duplicate key error: An object with the name {0} already exists. Please use a different name
+    or reach out to Appsmith customer support to resolve this.'
+  type: BAD_REQUEST
+- code: AE-APP-4092
+  name: DUPLICATE_KEY_PAGE_RELOAD
+  status: 409
+  title: Duplicate key
+  detail_template: 'Duplicate key error: An object with the name {0} already exists. Please reload the page and
+    try again.'
+  type: BAD_REQUEST
+- code: AE-APP-4093
+  name: DUPLICATE_DATASOURCE_CONFIGURATION
+  status: 409
+  title: Duplicate Configuration
+  detail_template: 'Duplicate Configuration error: Configuration for datasource id: {0} & environment id: {1} already
+    exists. Please reach out to Appsmith customer support to resolve this.'
+  type: BAD_REQUEST
+- code: AE-APP-4094
+  name: INVALID_METHOD_LEVEL_ANNOTATION_USAGE
+  status: 403
+  title: Invalid usage for custom annotation
+  detail_template: Invalid usage for {0} annotation from class {1} on method {2}. {3}. Please contact Appsmith support
+    for more details!
+  type: CONFIGURATION_ERROR
+- code: AE-APP-4099
+  name: INVALID_SMTP_CONFIGURATION
+  status: 400
+  title: Invalid SMTP configuration
+  detail_template: Your SMTP configuration is invalid. Please configure SMTP to enable to proceed
+  type: INTERNAL_ERROR
+- code: AE-APP-5000
+  name: INTERNAL_SERVER_ERROR
+  status: 500
+  title: Internal server error
+  detail_template: Internal server error while processing request
+  type: INTERNAL_ERROR
+- code: AE-APP-5001
+  name: REPOSITORY_SAVE_FAILED
+  status: 500
+  title: Failed to save
+  detail_template: Failed to save the repository. Please try again later.
+  type: INTERNAL_ERROR
+- code: AE-APP-5003
+  name: IO_ERROR
+  status: 503
+  title: I/O error
+  detail_template: IO action failed with error {0}
+  type: INTERNAL_ERROR
+- code: AE-APP-5004
+  name: PLUGIN_LOAD_FORM_JSON_FAIL
+  status: 500
+  title: Unable to load datasource form configuration
+  detail_template: '[{0}] Unable to load datasource form configuration. Details: {1}.'
+  type: INTERNAL_ERROR
+- code: AE-APP-5005
+  name: PLUGIN_LOAD_TEMPLATES_FAIL
+  status: 500
+  title: Unable to load datasource templates
+  detail_template: 'Unable to load datasource templates. Details: {0}.'
+  type: INTERNAL_ERROR
+- code: AE-APP-5006
+  name: OAUTH_NOT_AVAILABLE
+  status: 500
+  title: Unsupported login method
+  detail_template: Login with {0} is not supported.
+  type: BAD_REQUEST
+- code: AE-APP-5007
+  name: UNIQUE_SLUG_UNAVAILABLE
+  status: 409
+  title: Slug already in use
+  detail_template: 'Duplicate {0} slug detected. Slug value: {1} is already in use. It must be unique'
+  type: ARGUMENT_ERROR
+- code: AE-APP-5008
+  name: FAIL_UPDATE_USER_IN_SESSION
+  status: 500
+  title: Unable to update user in session
+  detail_template: Unable to update user in session.
+  type: INTERNAL_ERROR
+- code: AE-APP-5010
+  name: AUTHENTICATION_FAILURE
+  status: 500
+  title: Authentication failed
+  detail_template: 'Authentication failed with error: {0}'
+  type: AUTHENTICATION_ERROR
+- code: AE-APP-5011
+  name: INSTANCE_REGISTRATION_FAILURE
+  status: 500
+  title: Registration failed for this instance
+  detail_template: 'Registration for instance failed with error: {0}'
+  type: INTERNAL_ERROR
+- code: AE-APP-5012
+  name: CLOUD_SERVICES_ERROR
+  status: 400
+  title: Error in cloud services
+  detail_template: Received error from cloud services {0}
+  type: INTERNAL_ERROR
+- code: AE-APP-5015
+  name: SSH_KEY_GENERATION_ERROR
+  status: 500
+  title: Failed to generate SSH keys
+  detail_template: Failed to generate SSH keys, please contact Appsmith support for more details
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-APP-5017
+  name: FILE_PART_DATA_BUFFER_ERROR
+  status: 500
+  title: Failed to upload file
+  detail_template: 'Failed to upload file with error: {0}'
+  type: BAD_REQUEST
+- code: AE-APP-5018
+  name: MIGRATION_ERROR
+  status: 500
+  title: Action already migrated
+  detail_template: This action is already migrated
+  type: INTERNAL_ERROR
+- code: AE-APP-5019
+  name: ENV_FILE_NOT_FOUND
+  status: 500
+  title: Environment file not found
+  detail_template: Admin Settings is unavailable. Unable to read and write to Environment file.
+  type: CONFIGURATION_ERROR
+- code: AE-APP-5020
+  name: PUBLIC_APP_NO_PERMISSION_GROUP
+  status: 500
+  title: Required permission missing for public access
+  detail_template: Invalid state. Public application does not have the required roles set for public access. Please
+    reach out to Appsmith customer support to resolve this.
+  type: INTERNAL_ERROR
+- code: AE-APP-5021
+  name: RTS_SERVER_ERROR
+  status: 500
+  title: RTS server error
+  detail_template: 'RTS server error while processing request: {0}'
+  type: INTERNAL_ERROR
+- code: AE-APP-5022
+  name: SCHEMA_MISMATCH_ERROR
+  status: 500
+  title: Schema mismatch error
+  detail_template: Looks like you skipped some required update(s), please go back to the mandatory upgrade path
+    {0}, or refer to ''https://docs.appsmith.com/'' for more info
+  type: INTERNAL_ERROR
+- code: AE-APP-5023
+  name: SCHEMA_VERSION_NOT_FOUND_ERROR
+  status: 500
+  title: Schema version not found
+  detail_template: Could not find mandatory instance schema version config. Please reach out to Appsmith customer
+    support to resolve this.
+  type: INTERNAL_ERROR
+- code: AE-APP-5024
+  name: SERVER_NOT_READY
+  status: 500
+  title: Server not ready
+  detail_template: Appsmith server is not ready. Please try again in some time.
+  type: INTERNAL_ERROR
+- code: AE-APP-5025
+  name: SESSION_BAD_STATE
+  status: 500
+  title: Invalid user session
+  detail_template: User session is invalid. Please log out and log in again.
+  type: INTERNAL_ERROR
+- code: AE-APP-5040
+  name: PLUGIN_EXECUTION_TIMEOUT
+  status: 504
+  title: Timeout in plugin execution
+  detail_template: Plugin execution exceeded the maximum allowed time. Please increase the timeout in your action
+    settings or check your backend action endpoint
+  type: CONNECTIVITY_ERROR
+- code: AE-APP-5042
+  name: GOOGLE_RECAPTCHA_TIMEOUT
+  status: 504
+  title: Timeout in Google recaptcha verification
+  detail_template: Google recaptcha verification timeout. Please try again.
+  type: INTERNAL_ERROR
+- code: AE-APP-5043
+  name: MIGRATION_FAILED
+  status: 500
+  title: Migration failed
+  detail_template: 'Migration {0} failed. Reason: {1}. Note: {2}'
+  type: INTERNAL_ERROR
+- code: AE-APP-5044
+  name: INVALID_PROPERTIES_CONFIGURATION
+  status: 500
+  title: Invalid application property configuration
+  detail_template: Property configuration is wrong or malformed.
+  type: INTERNAL_ERROR
+- code: AE-APP-5048
+  name: MISCONFIGURED_INSTANCE_BASE_URL
+  status: 500
+  title: Instance base URL not configured
+  detail_template: APPSMITH_BASE_URL is not configured. Token-bearing email flows are disabled until the canonical
+    instance URL is set.
+  type: INTERNAL_ERROR
+- code: AE-AST-4009
+  name: NAME_CLASH_NOT_ALLOWED_IN_REFACTOR
+  status: 400
+  title: Name already taken
+  detail_template: The new name {1} already exists in the current page. Choose another name.
+  type: BAD_REQUEST
+- code: AE-BAD-4000
+  name: GENERIC_BAD_REQUEST
+  status: 400
+  title: Invalid request
+  detail_template: 'Bad request: {0}'
+  type: BAD_REQUEST
+- code: AE-BAD-4001
+  name: GENERIC_REQUEST_BODY_PARSE_ERROR
+  status: 400
+  title: Malformed request body
+  detail_template: Server cannot understand the request, malformed payload. Contact support for help.
+  type: BAD_REQUEST
+- code: AE-CAP-4035
+  name: GOOGLE_RECAPTCHA_FAILED
+  status: 401
+  title: Google recaptcha verification failed
+  detail_template: Google recaptcha verification failed. Please try again.
+  type: INTERNAL_ERROR
+- code: AE-CAP-4100
+  name: GOOGLE_RECAPTCHA_INVITE_FLOW_FAILED
+  status: 400
+  title: Google recaptcha verification failed
+  detail_template: Google recaptcha verification failed. Please try again.
+  type: INTERNAL_ERROR
+- code: AE-CRD-4039
+  name: INVALID_CRUD_PAGE_REQUEST
+  status: 400
+  title: Invalid page generation request
+  detail_template: Unable to process page generation request, {0}
+  type: BAD_REQUEST
+- code: AE-CRL-4029
+  name: INVALID_CURL_COMMAND
+  status: 400
+  title: Invalid cURL command
+  detail_template: Invalid cURL command, couldn''t import.
+  type: ARGUMENT_ERROR
+- code: AE-CRL-4032
+  name: INVALID_CURL_METHOD
+  status: 400
+  title: Invalid method in cURL command
+  detail_template: 'Invalid method in cURL command: {0}.'
+  type: ARGUMENT_ERROR
+- code: AE-CRL-4036
+  name: INVALID_CURL_HEADER
+  status: 400
+  title: Invalid header in cURL command
+  detail_template: 'Invalid header in cURL command: {0}.'
+  type: ARGUMENT_ERROR
+- code: AE-CRL-4054
+  name: EMPTY_CURL_INPUT_STATEMENT
+  status: 400
+  title: Invalid parameter
+  detail_template: Input CURL statement is empty / null. Please edit the input box to provide a valid CURL statement.
+  type: ARGUMENT_ERROR
+- code: AE-CYC-4041
+  name: CYCLICAL_DEPENDENCY_ERROR
+  status: 400
+  title: Cyclical Dependency in Page Load Actions
+  detail_template: 'Cyclical dependency error encountered while parsing relationship [{0}] where the relationship
+    is denoted as (source : target).'
+  type: CONFIGURATION_ERROR
+- code: AE-DS-4001
+  name: TRIGGER_PARAMETERS_EMPTY
+  status: 400
+  title: Trigger parameters empty.
+  detail_template: Trigger parameters empty.
+  type: INTERNAL_ERROR
+- code: AE-DTS-4003
+  name: DATASOURCE_NOT_GIVEN
+  status: 400
+  title: Missing datasource
+  detail_template: Missing datasource. Add/enter/connect a datasource to create a valid action.
+  type: ARGUMENT_ERROR
+- code: AE-DTS-4011
+  name: NO_CONFIGURATION_FOUND_IN_DATASOURCE
+  status: 400
+  title: Datasource configuration is invalid
+  detail_template: No datasource configuration found. Please configure it and try again.
+  type: DATASOURCE_CONFIGURATION_ERROR
+- code: AE-DTS-4013
+  name: INVALID_DATASOURCE
+  status: 400
+  title: Datasource configuration is invalid
+  detail_template: '{0} is not correctly configured. Please fix the following and then re-run: \n{1}'
+  type: DATASOURCE_CONFIGURATION_ERROR
+- code: AE-DTS-4015
+  name: INVALID_DATASOURCE_CONFIGURATION
+  status: 400
+  title: Datasource configuration is invalid
+  detail_template: Datasource configuration is invalid
+  type: DATASOURCE_CONFIGURATION_ERROR
+- code: AE-DTS-4030
+  name: DATASOURCE_HAS_ACTIONS
+  status: 409
+  title: Datasource cannot be deleted
+  detail_template: Cannot delete datasource since it has {0} {1} using it.
+  type: BAD_REQUEST
+- code: AE-EMV-4095
+  name: USER_ALREADY_VERIFIED
+  status: 400
+  title: User email already verified
+  detail_template: This email has already been verified
+  type: BAD_REQUEST
+- code: AE-EMV-4096
+  name: EMAIL_VERIFICATION_TOKEN_EXPIRED
+  status: 498
+  title: Email verification token expired
+  detail_template: Your email verification link has expired. Please re-trigger email verification
+  type: INTERNAL_ERROR
+- code: AE-EMV-4097
+  name: EMAIL_VERIFICATION_NOT_ENABLED
+  status: 400
+  title: Email verification not enabled
+  detail_template: Email verification is not enabled. Please contact your admin
+  type: BAD_REQUEST
+- code: AE-EMV-4098
+  name: INVALID_EMAIL_VERIFICATION
+  status: 400
+  title: Invalid email verification request
+  detail_template: Invalid Email verification request
+  type: INTERNAL_ERROR
+- code: AE-FRK-4034
+  name: APPLICATION_FORKING_NOT_ALLOWED
+  status: 403
+  title: Forking application not permitted
+  detail_template: Forking this application is not permitted at this time.
+  type: INTERNAL_ERROR
+- code: AE-GIT-4031
+  name: INVALID_GIT_CONFIGURATION
+  status: 400
+  title: Invalid Git configuration
+  detail_template: 'Git configuration is invalid. Details: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-4032
+  name: INVALID_GIT_SSH_CONFIGURATION
+  status: 400
+  title: SSH key not configured
+  detail_template: Appsmith couldn''t connect to this app''s Git repository. You may need to update the deploy key
+    in the app''s Git settings and add the new key to your Git repository
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-4036
+  name: GIT_MERGE_FAILED_REMOTE_CHANGES
+  status: 406
+  title: Git merge failed for remote changes
+  detail_template: Remote is ahead of local by {0} commits on branch {1}. Please pull remote changes first and try
+    again.
+  type: GIT_ACTION_EXECUTION_ERROR
+- code: AE-GIT-4037
+  name: GIT_MERGE_FAILED_LOCAL_CHANGES
+  status: 406
+  title: Git merge failed for local changes
+  detail_template: There are uncommitted changes present in your local branch {0}. Please commit them first and
+    try again
+  type: GIT_ACTION_EXECUTION_ERROR
+- code: AE-GIT-4040
+  name: UNSUPPORTED_OPERATION_FOR_REMOTE_BRANCH
+  status: 400
+  title: Unsupported Operation
+  detail_template: This operation is not supported for remote branch {0}. Please use local branches only to proceed
+  type: BAD_REQUEST
+- code: AE-GIT-4043
+  name: GIT_APPLICATION_LIMIT_ERROR
+  status: 402
+  title: Maximum number of Git repo connection limit reached
+  detail_template: You have reached the maximum number of private git repo counts which can be connected to the
+    workspace. Please reach out to Appsmith support to opt for commercial plan.
+  type: EE_FEATURE_ERROR
+- code: AE-GIT-4044
+  name: GIT_ACTION_FAILED
+  status: 400
+  title: Git failed
+  detail_template: 'git {0} failed. \nDetails: {1}'
+  type: GIT_ACTION_EXECUTION_ERROR
+- code: AE-GIT-4046
+  name: GIT_MERGE_CONFLICTS
+  status: 400
+  title: Merge conflicts found
+  detail_template: 'Merge conflicts found: {0}'
+  type: GIT_ACTION_EXECUTION_ERROR
+- code: AE-GIT-4047
+  name: GIT_PULL_CONFLICTS
+  status: 400
+  title: Merge conflicts found during the pull operation
+  detail_template: 'Merge conflicts found during the pull operation: {0}'
+  type: GIT_ACTION_EXECUTION_ERROR
+- code: AE-GIT-4048
+  name: GIT_UPSTREAM_CHANGES
+  status: 400
+  title: Git push failed for pending upstream changes
+  detail_template: Looks like there are pending upstream changes. To prevent you from losing history, we will pull
+    the changes and push them to your repo.
+  type: GIT_UPSTREAM_CHANGES_PUSH_EXECUTION_ERROR
+- code: AE-GIT-4050
+  name: INVALID_GIT_SSH_URL
+  status: 400
+  title: Invalid SSH URL
+  detail_template: Please enter valid SSH URL of your repository
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-4051
+  name: REPOSITORY_NOT_FOUND
+  status: 404
+  title: Repository not found
+  detail_template: Unable to find the remote repository for application {0}, please check the deploy key configuration
+    in your remote repository.
+  type: REPOSITORY_NOT_FOUND
+- code: AE-GIT-5005
+  name: GIT_ROUTE_HANDLER_NOT_FOUND
+  status: 500
+  title: Git route handler not found
+  detail_template: 'No handler found for Git route type: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5006
+  name: GIT_ROUTE_INVALID_FIELD_VALUE
+  status: 400
+  title: Invalid Git route field value
+  detail_template: 'Invalid field value provided for Git route: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5007
+  name: GIT_ROUTE_CONTEXT_BUILD_ERROR
+  status: 500
+  title: Git route context build failed
+  detail_template: 'Failed to build Git route context: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5008
+  name: GIT_ROUTE_ARTIFACT_NOT_FOUND
+  status: 404
+  title: Git route artifact not found
+  detail_template: 'Artifact not found for Git route: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5009
+  name: GIT_ROUTE_INVALID_PRIVATE_KEY
+  status: 400
+  title: Invalid Git private key
+  detail_template: 'Invalid private key format for Git route: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5010
+  name: GIT_ROUTE_METADATA_NOT_FOUND
+  status: 404
+  title: Git route metadata not found
+  detail_template: 'Artifact metadata not found for Git route: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5011
+  name: GIT_ROUTE_FS_OPS_NOT_REQUIRED
+  status: 404
+  title: Git FS operation not required
+  detail_template: 'Endpoint : {0}, does not require File system operation'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5012
+  name: GIT_ROUTE_REDIS_DOWNLOAD_FAILED
+  status: 500
+  title: Git repository download failed
+  detail_template: 'Download of git repository from redis failed. Error: {0}'
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5013
+  name: GIT_FILE_SYSTEM_ERROR
+  status: 503
+  title: Git file system error
+  detail_template: Error while accessing the file system. {0}
+  type: GIT_CONFIGURATION_ERROR
+- code: AE-GIT-5014
+  name: GIT_EXECUTION_TIMEOUT
+  status: 504
+  title: Timeout in Git command execution
+  detail_template: Git command execution exceeded the maximum allowed time, please contact Appsmith support for
+    more details
+  type: CONNECTIVITY_ERROR
+- code: AE-GIT-5015
+  name: GIT_ROUTE_FS_CLEAN_UP_REQUIRED
+  status: 404
+  title: Git FS operation not required
+  detail_template: 'Endpoint : {0}, requires FS and redis cleanup'
+  type: INTERNAL_ERROR
+- code: AE-GIT-5016
+  name: GIT_GENERIC_ERROR
+  status: 400
+  title: Git command execution error
+  detail_template: 'Git command execution error: {0}'
+  type: GIT_ACTION_EXECUTION_ERROR
+- code: AE-GIT-5020
+  name: GIT_FILE_IN_USE
+  status: 500
+  title: Git repo is locked
+  detail_template: We were unable to place a lock on the file system to perform {0} command. This error can occur
+    when another command {1}, which is in progress. Please try again later.
+  type: GIT_ACTION_EXECUTION_ERROR
+- code: AE-JSA-4040
+  name: INVALID_JS_ACTION
+  status: 400
+  title: Invalid action in JS Object
+  detail_template: Something went wrong while trying to parse this action. Please check the JS Object for errors.
+  type: BAD_REQUEST
+- code: AE-JSN-4001
+  name: JSON_PROCESSING_ERROR
+  status: 400
+  title: Json processing error
+  detail_template: Json processing error with error {0}
+  type: INTERNAL_ERROR
+- code: AE-JSN-4045
+  name: INCOMPATIBLE_IMPORTED_JSON
+  status: 400
+  title: Incompatible Json file
+  detail_template: Provided file is incompatible, please upgrade your instance to resolve this conflict.
+  type: BAD_REQUEST
+- code: AE-JSN-4049
+  name: GENERIC_JSON_IMPORT_ERROR
+  status: 400
+  title: Unable to import artifact in workspace
+  detail_template: Unable to import artifact in workspace {0}. {1}
+  type: BAD_REQUEST
+- code: AE-JSN-5001
+  name: ARTIFACT_IMPORT_DUPLICATE_KEY_WRITE_ERROR
+  status: 500
+  title: Import operation failed because of a duplicate key error.
+  detail_template: 'Duplicate key detected while importing artifact into the workspace during a write operation
+    to the server.. Details: {0}'
+  type: ARTIFACT_IMPORT_ERROR
+- code: AE-LGN-4000
+  name: INVALID_LOGIN_METHOD
+  status: 401
+  title: Invalid login method
+  detail_template: Please use {0} authentication to login to Appsmith
+  type: INTERNAL_ERROR
+- code: AE-PLG-4001
+  name: PLUGIN_NOT_INSTALLED
+  status: 400
+  title: Plugin not installed
+  detail_template: Plugin {0} not installed
+  type: INTERNAL_ERROR
+- code: AE-PLG-4002
+  name: PLUGIN_ID_NOT_GIVEN
+  status: 400
+  title: Missing plugin id
+  detail_template: Missing plugin id. Please enter one.
+  type: INTERNAL_ERROR
+- code: AE-PLG-5003
+  name: PLUGIN_RUN_FAILED
+  status: 500
+  title: Plugin execution failed
+  detail_template: Plugin execution failed with error {0}
+  type: INTERNAL_ERROR
+- code: AE-PSW-4002
+  name: INSUFFICIENT_PASSWORD_STRENGTH
+  status: 400
+  title: Insufficient password strength
+  detail_template: Password must be {0}-{1} characters long and include at least one uppercase letter, one lowercase
+    letter, one number, one symbol, and no whitespaces.
+  type: ARGUMENT_ERROR
+- code: AE-PSW-4037
+  name: INVALID_PASSWORD_LENGTH
+  status: 400
+  title: Invalid password length
+  detail_template: Password length should be between {0} and {1}
+  type: INTERNAL_ERROR
+- code: AE-RSR-4034
+  name: DEFAULT_RESOURCES_UNAVAILABLE
+  status: 400
+  title: Default resources not found
+  detail_template: Unexpected state. Default resources are unavailable for {0} with id {1}. Please reach out to
+    Appsmith customer support to resolve this.
+  type: BAD_REQUEST
+- code: AE-RSW-4041
+  name: ROLES_FROM_SAME_WORKSPACE
+  status: 400
+  title: Roles already exist
+  detail_template: Roles for the same Workspace provided or already exists.
+  type: ARGUMENT_ERROR
+- code: AE-SGN-4033
+  name: SIGNUP_DISABLED
+  status: 403
+  title: Signup disabled
+  detail_template: Signup is restricted on this instance of Appsmith. Please contact the administrator to get an
+    invite for user {0}.
+  type: INTERNAL_ERROR
+- code: AE-TMR-4029
+  name: TOO_MANY_REQUESTS
+  status: 429
+  title: Too many requests
+  detail_template: Too many requests received. Please try later.
+  type: INTERNAL_ERROR
+- code: AE-TMR-4030
+  name: TOO_MANY_FAILED_DATASOURCE_CONNECTION_REQUESTS
+  status: 429
+  title: Too many requests
+  detail_template: Too many failed requests received. Please try again after 5 minutes
+  type: INTERNAL_ERROR
+- code: AE-TMR-4031
+  name: DATASOURCE_CONNECTION_RATE_LIMIT_BLOCKING_FAILED
+  status: 500
+  title: Rate limit blocking failed
+  detail_template: Rate limit exhausted, blocking the host name failed
+  type: INTERNAL_ERROR
+- code: AE-USR-4004
+  name: USER_NOT_FOUND
+  status: 404
+  title: No user found
+  detail_template: Unable to find user with email {0}
+  type: INTERNAL_ERROR
