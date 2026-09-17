@@ -85,18 +85,16 @@ apis:
     url: rules/appsmith-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/appsmith-vocabulary.yaml
-- aid: appsmith:appsmith-datasources-api
-  name: Appsmith Datasources API
-  description: Connected datasource management
+- aid: appsmith:appsmith-workspaces-api
+  name: Appsmith Workspaces API
+  description: Workspace organization and management
   humanURL: https://docs.appsmith.com
   baseURL: https://app.appsmith.com/api/v1
   tags:
-  - Data Sources
-  tags_raw:
-  - Datasources
+  - Workspaces
   properties:
   - type: OpenAPI
-    url: openapi/appsmith-datasources-api-openapi.yml
+    url: openapi/appsmith-workspaces-api-openapi.yml
   - type: Website
     url: https://www.appsmith.com
   - type: Documentation
@@ -115,16 +113,16 @@ apis:
     url: rules/appsmith-spectral-rules.yml
   - type: Vocabulary
     url: vocabulary/appsmith-vocabulary.yaml
-- aid: appsmith:appsmith-workspaces-api
-  name: Appsmith Workspaces API
-  description: Workspace organization and management
+- aid: appsmith:appsmith-data-sources-api
+  name: Appsmith Data Sources API
+  description: Connected datasource management
   humanURL: https://docs.appsmith.com
   baseURL: https://app.appsmith.com/api/v1
   tags:
-  - Workspaces
+  - Data Sources
   properties:
   - type: OpenAPI
-    url: openapi/appsmith-workspaces-api-openapi.yml
+    url: openapi/appsmith-data-sources-api-openapi.yml
   - type: Website
     url: https://www.appsmith.com
   - type: Documentation
