@@ -91,6 +91,8 @@ apis:
   humanURL: https://docs.appsmith.com
   baseURL: https://app.appsmith.com/api/v1
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
