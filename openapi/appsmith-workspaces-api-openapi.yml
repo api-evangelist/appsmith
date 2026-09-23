@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Appsmith Applications Workspaces API
+  title: Appsmith Workspaces API
   description: API for the Appsmith open source low-code platform, enabling programmatic management of applications, workspaces, datasources, pages, and widgets for building internal tools and workflow applications.
   version: 1.0.0
   contact:

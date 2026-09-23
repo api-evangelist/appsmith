@@ -7,7 +7,13 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   authentication/appsmith-authentication.yml:
-    method: derived
+    method: searched
+    evidence: declared in the artifact
+  changelog/appsmith-changelog.yml:
+    method: searched
+    evidence: declared in the artifact
+  cli/appsmith-cli.yml:
+    method: searched
     evidence: declared in the artifact
   collections/appsmith-applications-api.opencollection.json:
     method: derived
@@ -27,6 +33,21 @@ artifacts:
   collections/appsmith-workspaces-api.postman_collection.json:
     method: derived
     evidence: openapi/appsmith-workspaces-api
+  components/appsmith-components.yml:
+    method: searched
+    evidence: declared in the artifact
+  conformance/appsmith-conformance.yml:
+    method: searched
+    evidence: declared in the artifact
+  conventions/appsmith-conventions.yml:
+    method: searched
+    evidence: declared in the artifact
+  data-model/appsmith-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  errors/appsmith-error-codes.yml:
+    method: searched
+    evidence: declared in the artifact
   examples/application-example.json:
     method: unknown
     evidence: no authorship recorded
@@ -81,70 +102,7 @@ artifacts:
   json-structure/application-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-23T094130.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-23T182523.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-26T223651.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-27T083119.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-27T190208.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T115055.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T170848.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T172558.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T192327.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T200725.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T133250.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T151044.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T162206.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T202106.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-01T163141.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-01T163302.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-01T171935.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-03T113057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-03T161012.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-04T083143.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-05T153418.yml:
+  kin/checks-2026-09-05T072335.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-06T210741.yml:
@@ -228,20 +186,89 @@ artifacts:
   kin/score-2026-08-28T221322.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  openapi/appsmith-applications-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  openapi/appsmith-datasources-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  openapi/appsmith-workspaces-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
-  plans/appsmith-plans-pricing.yml:
+  kin/score-2026-08-29T213958.yml:
     method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-29T230545.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-30T203505.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-30T220315.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-31T223420.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-01T063623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-01T210448.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-01T222808.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-02T211804.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-02T224043.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-03T161828.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-03T174231.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-04T062714.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-04T212454.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-04T224856.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T055819.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T072335.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  lifecycle/appsmith-lifecycle.yml:
+    method: searched
+    evidence: declared in the artifact
+  llms/appsmith-llms.txt:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  mcp/appsmith-mcp.yml:
+    method: searched
+    evidence: declared in the artifact
+  mcp/appsmith-tool-crosswalk.yml:
+    method: derived
+    evidence: declared in the artifact
+  openapi/_original/appsmith-openapi.yaml:
+    method: harvested
+    evidence: fetched from the provider as-is; byte-identical to the source
+  openapi/appsmith-applications-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appsmith-datasources-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/appsmith-workspaces-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  packages/appsmith-packages.yml:
+    method: searched
+    evidence: declared in the artifact
+  plans/appsmith-plans-pricing.yml:
+    method: searched
     evidence: declared in the artifact
   rate-limits/appsmith-rate-limits.yml:
-    method: generated
+    method: searched
     evidence: declared in the artifact
   rules/appsmith-jsonschema-spectral-rules.yml:
     method: generated
@@ -255,6 +282,21 @@ artifacts:
   security/appsmith-trust-center.yml:
     method: searched
     evidence: declared in the artifact
+  security/appsmith-vulnerability-disclosure.yml:
+    method: searched
+    evidence: declared in the artifact
+  skills/_index.yml:
+    method: generated
+    evidence: declared in the artifact
+  skills/appsmith-build-internal-tool.md:
+    method: generated
+    evidence: declared in the artifact
+  skills/appsmith-governed-change.md:
+    method: generated
+    evidence: declared in the artifact
   vocabulary/appsmith-vocabulary.yaml:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/appsmith-well-known.yml:
     method: unknown
     evidence: no authorship recorded

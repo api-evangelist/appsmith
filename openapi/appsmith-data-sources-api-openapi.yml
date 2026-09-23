@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Appsmith Applications Datasources API
+  title: Appsmith Datasources API
   description: API for the Appsmith open source low-code platform, enabling programmatic management of applications, workspaces, datasources, pages, and widgets for building internal tools and workflow applications.
   version: 1.0.0
   contact:
@@ -15,7 +15,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: Datasources
+- name: Data Sources
   description: Connected datasource management
 paths:
   /datasources:
@@ -24,7 +24,7 @@ paths:
       summary: Appsmith - List Datasources
       description: Returns a list of datasources connected to Appsmith applications
       tags:
-      - Datasources
+      - Data Sources
       responses:
         '200':
           description: A list of datasources
