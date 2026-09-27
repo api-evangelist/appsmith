@@ -43,9 +43,9 @@ x-docs-platform-checked: 2026-09-19
 x-docs-hosting: vercel
 tags:
   - Low-Code
-  - Open-Source
+  - Open Source
   - Internal Tools
-  - Workflow-Automation
+  - Workflow Automation
   - Developer Tools
 tags_raw:
   - Low-Code
@@ -53,6 +53,8 @@ tags_raw:
   - Internal Tools
   - Workflow Automation
   - Developer Tools
+  - Open-Source
+  - Workflow-Automation
 url: >-
   https://raw.githubusercontent.com/api-evangelist/appsmith/refs/heads/main/apis.yml
 created: 2026-03-27
