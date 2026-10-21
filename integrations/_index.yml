@@ -132,3 +132,16 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: appsmith-atlassian-own
+  label: Atlassian (own)
+  partner: atlassian
+  partner_name: Atlassian (own)
+  category: Atlassian Marketplace app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.atlassian.com/vendors/315485865/appsmith
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
