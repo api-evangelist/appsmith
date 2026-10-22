@@ -46,6 +46,23 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: Atlassian Marketplace app
+- partner_name: Digital Ocean (own)
+  partner: digital-ocean
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.digitalocean.com/apps/appsmith
+  mirror_of: digital-ocean/integrations/digital-ocean-integration-edges.yml
+  apps:
+  - Appsmith
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: Developer Tools
 generated: '2026-10-20'
 method: searched
 source:
@@ -58,3 +75,4 @@ checked:
 - https://skillsmp.com/sitemap.xml
 - https://www.skills.sh/sitemap.xml
 - atlassian/integrations/atlassian-integration-edges.yml
+- digital-ocean/integrations/digital-ocean-integration-edges.yml
