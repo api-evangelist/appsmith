@@ -1,4 +1,4 @@
-# Appsmith (appsmith)
+# Appsmith
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,57 +64,184 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Appsmith is an open source low-code platform for building internal tools and workflow applications. It lets developers build dashboards, admin panels, CRUD apps, and other internal tools by connecting to databases, REST APIs, and GraphQL services with a drag-and-drop UI builder.
+Appsmith is an open source (Apache-2.0) low-code platform for building internal tools, admin panels and workflow applications on top of 25+ databases and any REST or GraphQL API. It runs self-hosted via Docker, Kubernetes or Helm, or as Appsmith Cloud. Its agent surface is a first-party Model Context Protocol server bundled into the Appsmith image and fronted at /mcp, exposing 61 tools that build and edit applications under the calling user's own permissions; it ships disabled by default and requires a per-user mcp_ token. Appsmith publishes no public REST API reference: the platform API at /api/v1 is undocumented editor traffic and its springdoc OpenAPI surface is disabled by default and authenticated when enabled.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/appsmith/refs/heads/main/apis.yml)
+**Areas:** Low-Code · Open Source · Internal Tools · Workflow Automation · Developer Tools
 
-## Scope of Coverage
+## Appsmith on APIs.io
 
-| Item | Count |
-|------|-------|
-| APIs | 1 |
-| OpenAPI Specs | 1 |
-| JSON Schemas | 1 |
-| JSON Structures | 1 |
-| Examples | 1 |
-| JSON-LD Contexts | 1 |
-| Spectral Rulesets | 1 |
-| Naftiko Capabilities | 2 |
-| Vocabularies | 1 |
+Everything profiled for Appsmith is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/appsmith/](https://apis.io/providers/appsmith/)** — or go straight to one of the APIs or properties below.
 
-## APIs Covered
+### APIs (3)
 
-- **Appsmith API** — Application, workspace, and datasource management API for the Appsmith low-code platform.
+- [Appsmith Applications API](https://apis.io/apis/appsmith/appsmith-applications-api/) — Low-code application management
+- [Appsmith Workspaces API](https://apis.io/apis/appsmith/appsmith-workspaces-api/) — Workspace organization and management
+- [Appsmith Data Sources API](https://apis.io/apis/appsmith/appsmith-data-sources-api/) — Connected datasource management
 
-## Artifacts
+### Published properties
 
-### OpenAPI Specifications
-- [openapi/appsmith-openapi.yaml](openapi/appsmith-openapi.yaml)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### JSON Schemas
-- [json-schema/application-schema.json](json-schema/application-schema.json)
+#### MCP servers (1)
 
-### JSON Structures
-- [json-structure/application-structure.json](json-structure/application-structure.json)
+Model Context Protocol servers that expose the API to agents.
 
-### Examples
-- [examples/application-example.json](examples/application-example.json)
+- [Appsmith MCP server](https://apis.io/servers/appsmith/appsmith-mcp-server/)
 
-### JSON-LD
-- [json-ld/appsmith-context.jsonld](json-ld/appsmith-context.jsonld)
+#### Agentic access (1)
 
-### Spectral Rules
-- [rules/appsmith-spectral-rules.yml](rules/appsmith-spectral-rules.yml)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Naftiko Capabilities
-- [capabilities/shared/appsmith-api.yaml](capabilities/shared/appsmith-api.yaml)
-- [capabilities/internal-tool-builder.yaml](capabilities/internal-tool-builder.yaml)
+- [Appsmith Agentic Access](https://apis.io/agentic-access/appsmith/appsmith-agentic-access/)
 
-### Vocabulary
-- [vocabulary/appsmith-vocabulary.yaml](vocabulary/appsmith-vocabulary.yaml)
+#### JSON Schema (1)
 
-## Maintainers
+The data models the API reads and writes.
 
-**FN:** API Evangelist
+- [Application](https://apis.io/schemas/appsmith/application/)
 
-**Email:** info@apievangelist.com
+#### JSON Structure (1)
+
+Data models expressed in JSON Structure.
+
+- [Application Structure](https://apis.io/json-structure/appsmith/application-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Appsmith Context](https://apis.io/jsonld/appsmith/appsmith-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Appsmith Vocabulary](https://apis.io/vocabularies/appsmith/appsmith-vocabulary/)
+
+#### Examples (1)
+
+Example requests and responses.
+
+- [Application Example](https://apis.io/examples/appsmith/application-example/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Appsmith Applications API](https://apis.io/collections/appsmith/open-appsmith-applications-api/)
+- [Appsmith Applications Datasources API](https://apis.io/collections/appsmith/open-appsmith-datasources-api/)
+- [Appsmith Applications Workspaces API](https://apis.io/collections/appsmith/open-appsmith-workspaces-api/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Appsmith Applications Api Phrasing Overlay](https://apis.io/overlays/appsmith/appsmith-applications-api-phrasing-overlay/)
+- [Appsmith Data Sources Api Phrasing Overlay](https://apis.io/overlays/appsmith/appsmith-data-sources-api-phrasing-overlay/)
+- [Appsmith Workspaces Api Phrasing Overlay](https://apis.io/overlays/appsmith/appsmith-workspaces-api-phrasing-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Appsmith — jsonschema rules](https://apis.io/rules/appsmith/appsmith-jsonschema-spectral-rules/)
+- [Appsmith API Rules](https://apis.io/rules/appsmith/appsmith-spectral-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Appsmith Authentication](https://apis.io/security/appsmith/appsmith-authentication/)
+- [Appsmith Domain Security](https://apis.io/security/appsmith/appsmith-domain-security/)
+- [Appsmith Trust Center](https://apis.io/security/appsmith/appsmith-trust-center/)
+- [Appsmith Vulnerability Disclosure](https://apis.io/security/appsmith/appsmith-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Appsmith Plans Pricing](https://apis.io/plans/appsmith/appsmith-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Appsmith Rate Limits](https://apis.io/rate-limits/appsmith/appsmith-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Appsmith Finops](https://apis.io/finops/appsmith/appsmith-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.appsmith.com)
+- [Documentation](https://docs.appsmith.com)
+- [Getting started](https://docs.appsmith.com/getting-started)
+- [Pricing](https://www.appsmith.com/pricing)
+- [Sign up](https://app.appsmith.com/user/signup)
+- [Support](https://community.appsmith.com)
+- [Blog](https://www.appsmith.com/blog)
+- [Compliance](https://security.appsmith.com/)
+- [Terms of service](https://www.appsmith.com/terms-and-conditions)
+- [Privacy policy](https://www.appsmith.com/privacy-policy)
+- [GitHub](https://github.com/appsmithorg)
+- [Status](https://status.appsmith.com)
+
+## API Evangelist rating
+
+**Kin Score 65.6** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 61.7 |
+| Contract quality | 64.5 |
+| Contract governance | 27.3 |
+| Operational transparency | 68.4 |
+| Developer ergonomics | 44.6 |
+| Access clarity | 78.9 |
+
+**Agent readiness 34.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | templated |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/appsmith/](https://apis.io/providers/appsmith/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Appsmith: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/appsmith/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
