@@ -51,7 +51,7 @@ plans:
   period: none
   included_quota: Open-source low code application platform
 x-canonical:
-  generated: '2026-11-01'
+  generated: '2026-11-02'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - free
