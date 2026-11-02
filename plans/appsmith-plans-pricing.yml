@@ -1,0 +1,92 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.appsmith.com/pricing
+sources:
+- https://www.appsmith.com/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+delivery:
+  delivery: open-core
+  method: page
+  read: '2026-10-28'
+  evidence: Community Our open-source low code application platform, available for free.
+  free_edition: Community
+  managed_tier: Business
+published: true
+note: User-based pricing with free open-source community edition; 15-day free trial of Business mentioned.
+plan_count: 4
+currency: USD
+plans:
+- name: Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  unit: per user
+  included_quota: Up to 5 users for cloud, 5 workspaces, Version control with Git 3 repos, Google SSO,
+    3 standard roles, Public apps, Community support
+- name: Business
+  price_text: $15 / Month per user
+  price: 15
+  currency: USD
+  period: month
+  unit: per user
+  included_quota: Everything in Free, plus Up to 99 users, unlimited environments, Git repos, and workspaces,
+    workflows, premium integrations, audit logs
+- name: Enterprise
+  price_text: $2,500 / Month
+  price: 2500
+  currency: USD
+  period: month
+  unit: For 100 users
+  included_quota: Everything in Business, plus SAML/OIDC SSO, SCIM, CI/CD, private app embedding, airgapped
+    edition (add-on), managed hosting, custom integrations, dedicated support and SLAs
+- name: Community
+  price_text: available for free
+  period: none
+  included_quota: Open-source low code application platform
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  - seat
+  units:
+  - seat
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Business
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Community
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
